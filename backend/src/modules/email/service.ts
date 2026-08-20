@@ -16,11 +16,13 @@ class SmtpNotificationProviderService extends AbstractNotificationProviderServic
   protected logger_: Logger
   protected transporter_: Transporter
   protected from_: string
+  protected host_: string
 
   constructor(container: { logger: Logger }, options: SmtpOptions) {
     super(container)
     this.logger_ = container.logger
     this.from_ = options.from || options.user || "no-reply@localhost"
+    this.host_ = options.host || ""
     this.transporter_ = nodemailer.createTransport({
       host: options.host,
       port: Number(options.port) || 587,
@@ -30,7 +32,7 @@ class SmtpNotificationProviderService extends AbstractNotificationProviderServic
   }
 
   async send(notification: { to: string; data?: Record<string, any> }): Promise<{ id: string }> {
-    if (!this.transporter_.options?.host) {
+    if (!this.host_) {
       this.logger_?.warn?.("SMTP not configured; skipping email to " + notification.to)
       return { id: "skipped" }
     }
