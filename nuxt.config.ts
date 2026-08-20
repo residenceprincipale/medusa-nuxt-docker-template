@@ -25,6 +25,9 @@ export default defineNuxtConfig({
     public: {
       medusaBackend: process.env.NUXT_PUBLIC_MEDUSA_BACKEND || 'http://localhost:9000',
       medusaPublishableKey: process.env.NUXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY || '',
+      // Admin panel URL. Local default: backend admin at :9000/app.
+      // Override per environment (e.g. NUXT_PUBLIC_MEDUSA_ADMIN_URL=https://admin.example.com).
+      adminUrl: process.env.NUXT_PUBLIC_MEDUSA_ADMIN_URL || 'http://localhost:9000/app',
     },
   },
 
