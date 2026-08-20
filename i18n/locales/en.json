@@ -1,0 +1,163 @@
+{
+  "nav": {
+    "home": "Home",
+    "cart": "Cart",
+    "account": "Account",
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout",
+    "wishlist": "Wishlist",
+    "blog": "Blog",
+    "about": "About",
+    "contact": "Contact",
+    "search": "Search"
+  },
+  "home": {
+    "title": "Products",
+    "empty": "No products yet. Add some in the Medusa Admin.",
+    "loading": "Loading products..."
+  },
+  "product": {
+    "addToCart": "Add to cart",
+    "adding": "Adding...",
+    "added": "Added to cart!",
+    "noImage": "No image",
+    "options": "Options",
+    "description": "Description",
+    "reviews": "Reviews",
+    "relatedProducts": "Related products"
+  },
+  "cart": {
+    "title": "Cart",
+    "empty": "Your cart is empty.",
+    "browse": "Browse products",
+    "total": "Total",
+    "checkout": "Checkout",
+    "continueShopping": "Continue shopping",
+    "remove": "Remove",
+    "promoCode": "Promo code",
+    "apply": "Apply",
+    "removePromo": "Remove"
+  },
+  "checkout": {
+    "title": "Checkout",
+    "shipping": "Shipping information",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "email": "Email",
+    "address": "Address",
+    "city": "City",
+    "postalCode": "Postal code",
+    "country": "Country",
+    "shippingMethod": "Shipping method",
+    "paymentMethod": "Payment method",
+    "orderSummary": "Order summary",
+    "placeOrder": "Place order",
+    "processing": "Processing...",
+    "orderPlaced": "Order placed!",
+    "orderId": "Order ID",
+    "continueShopping": "Continue shopping",
+    "empty": "Your cart is empty.",
+    "browse": "Browse products"
+  },
+  "auth": {
+    "loginTitle": "Login",
+    "registerTitle": "Register",
+    "email": "Email",
+    "password": "Password",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "loginButton": "Login",
+    "registerButton": "Register",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "loggingIn": "Logging in...",
+    "registering": "Registering..."
+  },
+  "account": {
+    "title": "My Account",
+    "profile": "Profile",
+    "orders": "Orders",
+    "addresses": "Addresses",
+    "noOrders": "No orders yet."
+  },
+  "search": {
+    "title": "Search",
+    "placeholder": "Search products...",
+    "noResults": "No products found.",
+    "results": "results"
+  },
+  "categories": {
+    "title": "Categories",
+    "all": "All categories",
+    "empty": "No categories found."
+  },
+  "wishlist": {
+    "title": "Wishlist",
+    "empty": "Your wishlist is empty.",
+    "added": "Added to wishlist",
+    "removed": "Removed from wishlist"
+  },
+  "reviews": {
+    "title": "Reviews",
+    "write": "Write a review",
+    "empty": "No reviews yet. Be the first!",
+    "rating": "Rating",
+    "submit": "Submit",
+    "cancel": "Cancel"
+  },
+  "blog": {
+    "title": "Blog",
+    "empty": "No posts yet.",
+    "readMore": "Read more",
+    "backToBlog": "Back to blog"
+  },
+  "about": {
+    "title": "About Us",
+    "content": "We are a modern e-commerce store built with MedusaJS."
+  },
+  "contact": {
+    "title": "Contact Us",
+    "name": "Name",
+    "email": "Email",
+    "message": "Message",
+    "send": "Send message",
+    "success": "Message sent!",
+    "error": "Failed to send message."
+  },
+  "newsletter": {
+    "title": "Newsletter",
+    "placeholder": "Enter your email",
+    "subscribe": "Subscribe",
+    "subscribed": "Subscribed!",
+    "error": "Subscription failed."
+  },
+  "orderTracking": {
+    "title": "Order Tracking",
+    "orderId": "Order ID",
+    "lookup": "Look up",
+    "notFound": "Order not found.",
+    "status": "Status",
+    "date": "Date",
+    "total": "Total"
+  },
+  "footer": {
+    "newsletter": "Newsletter",
+    "categories": "Categories",
+    "blog": "Blog",
+    "about": "About",
+    "contact": "Contact",
+    "copyright": "© {year} Medusa Store"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Something went wrong.",
+    "back": "Back",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "close": "Close",
+    "currency": "Currency"
+  }
+}

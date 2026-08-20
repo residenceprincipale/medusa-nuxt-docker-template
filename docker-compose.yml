@@ -1,0 +1,66 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: medusa
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 2s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 2s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build: ./backend
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    ports: ["9000:9000"]
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgres://postgres:postgres@postgres:5432/medusa
+      REDIS_URL: redis://redis:6379
+      JWT_SECRET: ${JWT_SECRET:-changeme}
+      COOKIE_SECRET: ${COOKIE_SECRET:-changeme}
+      STORE_CORS: ${STORE_CORS:-http://localhost:3000}
+      ADMIN_CORS: ${ADMIN_CORS:-http://localhost:9000}
+      AUTH_CORS: ${AUTH_CORS:-http://localhost:9000}
+      STRIPE_API_KEY: ${STRIPE_API_KEY:-}
+      STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET:-}
+
+  storefront:
+    build:
+      context: .
+      args:
+        MEDUSA_BACKEND_URL: ${MEDUSA_BACKEND_URL:-http://localhost:9000}
+        MEDUSA_PUBLISHABLE_KEY: ${MEDUSA_PUBLISHABLE_KEY:-}
+        NUXT_PUBLIC_MEDUSA_BACKEND: http://localhost:9000
+        NUXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY: ${MEDUSA_PUBLISHABLE_KEY:-}
+    restart: unless-stopped
+    depends_on: [backend]
+    ports: ["3000:3000"]
+    environment:
+      # Browser-facing URL (client SDK calls run in the user's browser)
+      NUXT_PUBLIC_MEDUSA_BACKEND: http://localhost:9000
+      # SSR-only URL (server runs inside the docker network)
+      NUXT_SERVER_MEDUSA_BACKEND: http://backend:9000
+      NUXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY: ${MEDUSA_PUBLISHABLE_KEY:-}
+
+volumes:
+  pgdata:

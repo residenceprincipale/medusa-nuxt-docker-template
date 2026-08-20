@@ -1,0 +1,33 @@
+{
+  "name": "medusa-backend",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "build": "medusa build",
+    "start": "medusa start",
+    "dev": "medusa develop",
+    "db:migrate": "medusa db:migrate",
+    "db:seed": "medusa exec src/seed.ts",
+    "user": "medusa user"
+  },
+  "dependencies": {
+    "@medusajs/admin-sdk": "2.19.0",
+    "@medusajs/admin-shared": "2.19.0",
+    "@medusajs/cli": "2.19.0",
+    "@medusajs/dashboard": "2.19.0",
+    "@medusajs/draft-order": "2.19.0",
+    "@medusajs/framework": "2.19.0",
+    "@medusajs/medusa": "2.19.0",
+    "@medusajs/payment-stripe": "2.19.0",
+    "@medusajs/ui": "4.2.1",
+    "zod": "4.4.3"
+  },
+  "devDependencies": {
+    "@types/node": "26.2.0",
+    "typescript": "5.8.3",
+    "vite": "7.3.6"
+  },
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
+  }
+}

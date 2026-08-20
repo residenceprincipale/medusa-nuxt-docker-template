@@ -1,0 +1,163 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "cart": "Panier",
+    "account": "Compte",
+    "login": "Connexion",
+    "register": "Inscription",
+    "logout": "Deconnexion",
+    "wishlist": "Liste de souhaits",
+    "blog": "Blog",
+    "about": "A propos",
+    "contact": "Contact",
+    "search": "Rechercher"
+  },
+  "home": {
+    "title": "Produits",
+    "empty": "Aucun produit. Ajoutez-en dans l'admin Medusa.",
+    "loading": "Chargement des produits..."
+  },
+  "product": {
+    "addToCart": "Ajouter au panier",
+    "adding": "Ajout...",
+    "added": "Ajoute au panier !",
+    "noImage": "Pas d'image",
+    "options": "Options",
+    "description": "Description",
+    "reviews": "Avis",
+    "relatedProducts": "Produits similaires"
+  },
+  "cart": {
+    "title": "Panier",
+    "empty": "Votre panier est vide.",
+    "browse": "Voir les produits",
+    "total": "Total",
+    "checkout": "Commander",
+    "continueShopping": "Continuer vos achats",
+    "remove": "Supprimer",
+    "promoCode": "Code promo",
+    "apply": "Appliquer",
+    "removePromo": "Retirer"
+  },
+  "checkout": {
+    "title": "Commande",
+    "shipping": "Informations de livraison",
+    "firstName": "Prenom",
+    "lastName": "Nom",
+    "email": "Email",
+    "address": "Adresse",
+    "city": "Ville",
+    "postalCode": "Code postal",
+    "country": "Pays",
+    "shippingMethod": "Mode de livraison",
+    "paymentMethod": "Mode de paiement",
+    "orderSummary": "Resume de la commande",
+    "placeOrder": "Passer la commande",
+    "processing": "Traitement...",
+    "orderPlaced": "Commande passee !",
+    "orderId": "Numero de commande",
+    "continueShopping": "Continuer vos achats",
+    "empty": "Votre panier est vide.",
+    "browse": "Voir les produits"
+  },
+  "auth": {
+    "loginTitle": "Connexion",
+    "registerTitle": "Inscription",
+    "email": "Email",
+    "password": "Mot de passe",
+    "firstName": "Prenom",
+    "lastName": "Nom",
+    "loginButton": "Se connecter",
+    "registerButton": "S'inscrire",
+    "noAccount": "Pas encore de compte ?",
+    "hasAccount": "Deja un compte ?",
+    "loggingIn": "Connexion...",
+    "registering": "Inscription..."
+  },
+  "account": {
+    "title": "Mon Compte",
+    "profile": "Profil",
+    "orders": "Commandes",
+    "addresses": "Adresses",
+    "noOrders": "Aucune commande."
+  },
+  "search": {
+    "title": "Recherche",
+    "placeholder": "Rechercher des produits...",
+    "noResults": "Aucun produit trouve.",
+    "results": "resultats"
+  },
+  "categories": {
+    "title": "Categories",
+    "all": "Toutes les categories",
+    "empty": "Aucune categorie."
+  },
+  "wishlist": {
+    "title": "Liste de souhaits",
+    "empty": "Votre liste de souhaits est vide.",
+    "added": "Ajoute a la liste",
+    "removed": "Retire de la liste"
+  },
+  "reviews": {
+    "title": "Avis",
+    "write": "Ecrire un avis",
+    "empty": "Pas encore d'avis. Soyez le premier !",
+    "rating": "Note",
+    "submit": "Envoyer",
+    "cancel": "Annuler"
+  },
+  "blog": {
+    "title": "Blog",
+    "empty": "Aucun article.",
+    "readMore": "Lire la suite",
+    "backToBlog": "Retour au blog"
+  },
+  "about": {
+    "title": "A propos",
+    "content": "Nous sommes une boutique e-commerce moderne construite avec MedusaJS."
+  },
+  "contact": {
+    "title": "Contact",
+    "name": "Nom",
+    "email": "Email",
+    "message": "Message",
+    "send": "Envoyer",
+    "success": "Message envoye !",
+    "error": "Echec de l'envoi."
+  },
+  "newsletter": {
+    "title": "Newsletter",
+    "placeholder": "Votre email",
+    "subscribe": "S'abonner",
+    "subscribed": "Abonne !",
+    "error": "Echec de l'abonnement."
+  },
+  "orderTracking": {
+    "title": "Suivi de commande",
+    "orderId": "Numero de commande",
+    "lookup": "Rechercher",
+    "notFound": "Commande non trouvee.",
+    "status": "Statut",
+    "date": "Date",
+    "total": "Total"
+  },
+  "footer": {
+    "newsletter": "Newsletter",
+    "categories": "Categories",
+    "blog": "Blog",
+    "about": "A propos",
+    "contact": "Contact",
+    "copyright": "© {year} Medusa Store"
+  },
+  "common": {
+    "loading": "Chargement...",
+    "error": "Une erreur s'est produite.",
+    "back": "Retour",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "close": "Fermer",
+    "currency": "Devise"
+  }
+}
