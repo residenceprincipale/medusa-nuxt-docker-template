@@ -58,6 +58,11 @@ export const useAuthStore = defineStore('auth', {
       this.error = null
       try {
         await sdk.auth.register('customer', 'emailpass', data)
+        await sdk.store.customer.create({
+          email: data.email,
+          first_name: data.first_name,
+          last_name: data.last_name,
+        })
         await this.login(data.email, data.password)
       } catch (e: any) {
         this.error = e?.message || 'Registration failed'
