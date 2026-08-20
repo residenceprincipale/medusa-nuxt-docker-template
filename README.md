@@ -94,7 +94,7 @@ docker compose up -d backend
 # Storefront on the host (server + browser both hit localhost:9000)
 NUXT_SERVER_MEDUSA_BACKEND=http://localhost:9000 \
 NUXT_PUBLIC_MEDUSA_BACKEND=http://localhost:9000 \
-NUXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY=$MEDUSA_PUBLISHABLE_KEY \
+NUXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY=$NUXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY \
 bun install && bun run dev
 ```
 
@@ -119,12 +119,12 @@ Point the storefront at an already-running Medusa backend (e.g. Render, Railway,
 Set these in `.env` (or pass inline) to the **remote** backend's values:
 
 ```bash
-# Remote Medusa backend base URL (no trailing slash)
-MEDUSA_BACKEND_URL=https://your-medusa.example.com
+# Remote Medusa backend base URL (no trailing slash) — browser-facing
+NUXT_PUBLIC_MEDUSA_BACKEND=https://your-medusa.example.com
 
 # The publishable key from THAT backend — not the local one.
 # Get it from the remote backend's admin UI or `medusa` CLI on the deployed project.
-MEDUSA_PUBLISHABLE_KEY=pk_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+NUXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY=pk_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
 
 Then run only the storefront:
@@ -134,9 +134,9 @@ Then run only the storefront:
 docker compose up -d storefront
 
 # …or dev mode with hot reload (override uses remote URL for both browser + SSR)
-NUXT_PUBLIC_MEDUSA_BACKEND=$MEDUSA_BACKEND_URL \
-NUXT_SERVER_MEDUSA_BACKEND=$MEDUSA_BACKEND_URL \
-NUXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY=$MEDUSA_PUBLISHABLE_KEY \
+NUXT_PUBLIC_MEDUSA_BACKEND=$NUXT_PUBLIC_MEDUSA_BACKEND \
+NUXT_SERVER_MEDUSA_BACKEND=$NUXT_PUBLIC_MEDUSA_BACKEND \
+NUXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY=$NUXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY \
 bun run dev
 ```
 

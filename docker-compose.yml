@@ -49,10 +49,8 @@ services:
     build:
       context: .
       args:
-        MEDUSA_BACKEND_URL: ${MEDUSA_BACKEND_URL:-http://localhost:9000}
-        MEDUSA_PUBLISHABLE_KEY: ${MEDUSA_PUBLISHABLE_KEY:-}
         NUXT_PUBLIC_MEDUSA_BACKEND: http://localhost:9000
-        NUXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY: ${MEDUSA_PUBLISHABLE_KEY:-}
+        NUXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY: ${NUXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY:-}
     restart: unless-stopped
     depends_on: [backend]
     expose:
@@ -62,7 +60,7 @@ services:
       NUXT_PUBLIC_MEDUSA_BACKEND: http://localhost:9000
       # SSR-only URL (server runs inside the docker network)
       NUXT_SERVER_MEDUSA_BACKEND: http://backend:9000
-      NUXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY: ${MEDUSA_PUBLISHABLE_KEY:-}
+      NUXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY: ${NUXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY:-}
 
 volumes:
   pgdata:

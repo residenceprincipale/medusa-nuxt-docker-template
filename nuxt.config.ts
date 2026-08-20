@@ -23,9 +23,8 @@ export default defineNuxtConfig({
   runtimeConfig: {
     medusaBackend: process.env.NUXT_SERVER_MEDUSA_BACKEND || 'http://backend:9000',
     public: {
-      medusaBackend:
-        process.env.NUXT_PUBLIC_MEDUSA_BACKEND || process.env.MEDUSA_BACKEND_URL || 'http://localhost:9000',
-      medusaPublishableKey: process.env.NUXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY || process.env.MEDUSA_PUBLISHABLE_KEY || '',
+      medusaBackend: process.env.NUXT_PUBLIC_MEDUSA_BACKEND || 'http://localhost:9000',
+      medusaPublishableKey: process.env.NUXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY || '',
     },
   },
 
