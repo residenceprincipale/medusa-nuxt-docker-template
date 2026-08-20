@@ -13,13 +13,13 @@ type SmtpOptions = {
 
 class SmtpNotificationProviderService extends AbstractNotificationProviderService {
   static identifier = "smtp"
-  protected logger_: Logger
-  protected transporter_: Transporter
+  protected logger_!: Logger
+  protected transporter_!: Transporter
   protected from_: string
   protected host_: string
 
   constructor(container: { logger: Logger }, options: SmtpOptions) {
-    super(container)
+    super()
     this.logger_ = container.logger
     this.from_ = options.from || options.user || "no-reply@localhost"
     this.host_ = options.host || ""
@@ -31,7 +31,7 @@ class SmtpNotificationProviderService extends AbstractNotificationProviderServic
     })
   }
 
-  async send(notification: { to: string; data?: Record<string, any> }): Promise<{ id: string }> {
+  async send(notification: any): Promise<{ id: string }> {
     if (!this.host_) {
       this.logger_?.warn?.("SMTP not configured; skipping email to " + notification.to)
       return { id: "skipped" }
