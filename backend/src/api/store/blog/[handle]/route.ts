@@ -1,9 +1,10 @@
 import type { MedusaRequest, MedusaResponse } from '@medusajs/framework/http'
+import type { BlogService } from '../../../modules/blog/service'
 
 export async function GET(req: MedusaRequest, res: MedusaResponse) {
   const handle = req.params.handle
 
-  const blogService: any = req.scope.resolve('blog')
+  const blogService = req.scope.resolve<BlogService>('blog')
   const items = await blogService.listPosts({ handle })
 
   if (!items?.length) {

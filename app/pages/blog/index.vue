@@ -18,6 +18,7 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
+import type { BlogPost } from '~/types/medusa'
 
 const { t } = useI18n()
 const features = useFeatures()
@@ -25,9 +26,9 @@ const features = useFeatures()
 useHead({ title: t('blog.title') })
 useSeoMeta({ title: t('blog.title') })
 
-const { data, pending, error } = await useAsyncData('blog-posts', () => $fetch('/api/blog'))
+const { data, pending, error } = await useAsyncData('blog-posts', () => $fetch<{ posts: BlogPost[] }>('/api/blog'))
 
-const posts = computed(() => (data.value as any)?.posts ?? data.value ?? [])
+const posts = computed(() => data.value?.posts ?? [])
 </script>
 
 <style scoped>

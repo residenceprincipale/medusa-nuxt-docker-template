@@ -50,8 +50,8 @@ async function reset() {
   try {
     await sdk.auth.updateProvider('customer', 'emailpass', { email, password: password.value }, token)
     done.value = true
-  } catch (e: any) {
-    error.value = e?.message || t('auth.resetError')
+  } catch (e) {
+    error.value = e instanceof Error ? e.message : t('auth.resetError')
   } finally {
     loading.value = false
   }

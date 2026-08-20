@@ -51,6 +51,7 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
+import type { CartLineItem } from '~/types/medusa'
 
 const { t } = useI18n()
 const features = useFeatures()
@@ -72,7 +73,7 @@ watch(
   { deep: true },
 )
 
-async function changeQty(item: any, qty: number) {
+async function changeQty(item: CartLineItem, qty: number) {
   if (qty < 1) {
     await cartStore.removeItem(item.id)
   } else {

@@ -38,6 +38,7 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
+import type { HttpTypes } from '@medusajs/types'
 
 const { t } = useI18n()
 const features = useFeatures()
@@ -60,10 +61,10 @@ const searchQuery = ref('')
 const { data, pending, error } = await useAsyncData(
   'products',
   async () => {
-    const params: Record<string, any> = {}
+    const params: HttpTypes.StoreProductListParams = {}
     if (searchQuery.value) params.q = searchQuery.value
     if (selectedCategory.value) {
-      const cat = categories.value.find((c: any) => c.handle === selectedCategory.value)
+      const cat = categories.value.find((c) => c.handle === selectedCategory.value)
       if (cat) params.category_id = [cat.id]
     }
     if (sortBy.value) params.order = sortBy.value

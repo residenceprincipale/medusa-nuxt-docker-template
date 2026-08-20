@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@medusajs/js-sdk": "2.19.0",
+    "@medusajs/types": "2.19.0",
     "@nuxtjs/i18n": "10.6.0",
     "@pinia/nuxt": "1.0.2",
     "@stripe/stripe-js": "9.13.0",

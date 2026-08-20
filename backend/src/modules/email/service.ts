@@ -1,5 +1,6 @@
 import { AbstractNotificationProviderService } from "@medusajs/framework/utils"
 import { Logger } from "@medusajs/framework/types"
+import { ProviderSendNotificationDTO } from "@medusajs/types"
 import nodemailer, { Transporter } from "nodemailer"
 
 type SmtpOptions = {
@@ -31,12 +32,12 @@ class SmtpNotificationProviderService extends AbstractNotificationProviderServic
     })
   }
 
-  async send(notification: any): Promise<{ id: string }> {
+  async send(notification: ProviderSendNotificationDTO): Promise<{ id: string }> {
     if (!this.host_) {
       this.logger_?.warn?.("SMTP not configured; skipping email to " + notification.to)
       return { id: "skipped" }
     }
-    const data = notification.data ?? {}
+    const data = (notification.data ?? {}) as { subject?: string; html?: string; text?: string }
     const info = await this.transporter_.sendMail({
       from: this.from_,
       to: notification.to,

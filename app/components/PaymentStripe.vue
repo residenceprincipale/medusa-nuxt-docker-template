@@ -22,7 +22,7 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{
-  confirm: [paymentMethod: any]
+  confirm: [paymentMethod: Stripe.PaymentMethod | null]
 }>()
 
 const cardContainer = ref<HTMLElement | null>(null)

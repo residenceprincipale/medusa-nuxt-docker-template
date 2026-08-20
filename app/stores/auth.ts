@@ -1,8 +1,9 @@
 import { defineStore } from 'pinia'
+import type { Customer } from '~/types/medusa'
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
-    customer: null as any,
+    customer: null as Customer | null,
     token: null as string | null,
     loading: false,
     error: null as string | null,
@@ -27,7 +28,7 @@ export const useAuthStore = defineStore('auth', {
       }
     },
 
-    setAuth(token: string, customer: any) {
+    setAuth(token: string, customer: Customer) {
       this.token = token
       this.customer = customer
       if (import.meta.client) {
@@ -44,8 +45,8 @@ export const useAuthStore = defineStore('auth', {
         const token = await sdk.auth.login('customer', 'emailpass', { email, password })
         const { customer } = await sdk.store.customer.retrieve({}, { Authorization: `Bearer ${token}` })
         this.setAuth(token, customer)
-      } catch (e: any) {
-        this.error = e?.message || 'Login failed'
+      } catch (e) {
+        this.error = e instanceof Error ? e.message : 'Login failed'
         throw e
       } finally {
         this.loading = false
@@ -64,8 +65,8 @@ export const useAuthStore = defineStore('auth', {
           last_name: data.last_name,
         })
         await this.login(data.email, data.password)
-      } catch (e: any) {
-        this.error = e?.message || 'Registration failed'
+      } catch (e) {
+        this.error = e instanceof Error ? e.message : 'Registration failed'
         throw e
       } finally {
         this.loading = false

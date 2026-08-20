@@ -1,13 +1,15 @@
 import { defineStore } from 'pinia'
+import type { Cart } from '~/types/medusa'
+import type { HttpTypes } from '@medusajs/types'
 
 export const useCartStore = defineStore('cart', {
   state: () => ({
-    cart: null as any,
+    cart: null as Cart | null,
     loading: false,
   }),
 
   getters: {
-    itemCount: (state) => state.cart?.items?.reduce((sum: number, i: any) => sum + i.quantity, 0) ?? 0,
+    itemCount: (state) => state.cart?.items?.reduce((sum: number, i) => sum + i.quantity, 0) ?? 0,
     total: (state) => state.cart?.total ?? 0,
     currency: (state) => state.cart?.currency_code ?? 'usd',
     items: (state) => state.cart?.items ?? [],
@@ -109,7 +111,7 @@ export const useCartStore = defineStore('cart', {
       this.cart = cart
     },
 
-    async updateShippingAddress(address: Record<string, any>) {
+    async updateShippingAddress(address: HttpTypes.StoreAddAddress) {
       if (!this.cart) return
       const sdk = useMedusa()
       const { cart } = await sdk.store.cart.update(this.cart.id, { shipping_address: address })

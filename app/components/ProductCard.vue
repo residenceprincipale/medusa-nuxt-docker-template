@@ -16,14 +16,15 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
+import type { Product } from '~/types/medusa'
 
 const { t } = useI18n()
 
 const props = defineProps<{
-  product: any
+  product: Product
 }>()
 
-function formatPrice(product: any): string {
+function formatPrice(product: Product): string {
   const amount = product?.variants?.[0]?.calculated_price?.calculated_amount
   const currency = product?.variants?.[0]?.calculated_price?.currency_code?.toUpperCase() ?? 'USD'
   if (amount == null || Number.isNaN(amount)) return ''

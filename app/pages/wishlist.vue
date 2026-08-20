@@ -14,6 +14,7 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
+import type { Product } from '~/types/medusa'
 
 const { t } = useI18n()
 const features = useFeatures()
@@ -23,7 +24,7 @@ useHead({ title: t('wishlist.title') })
 useSeoMeta({ title: t('wishlist.title') })
 
 const wishlistIds = ref<string[]>([])
-const products = ref<any[]>([])
+const products = ref<Product[]>([])
 const loading = ref(false)
 
 onMounted(async () => {

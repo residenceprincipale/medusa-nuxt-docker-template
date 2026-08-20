@@ -1,4 +1,5 @@
 import type { MedusaRequest, MedusaResponse } from '@medusajs/framework/http'
+import type { ReviewsService } from '../../../modules/reviews/service'
 
 export async function GET(req: MedusaRequest, res: MedusaResponse) {
   const productId = req.query.product_id as string
@@ -7,7 +8,7 @@ export async function GET(req: MedusaRequest, res: MedusaResponse) {
     return res.status(400).json({ message: 'product_id query param is required' })
   }
 
-  const reviewsService: any = req.scope.resolve('reviews')
+  const reviewsService = req.scope.resolve<ReviewsService>('reviews')
   const items = await reviewsService.listReviews({ product_id: productId })
 
   res.json({ items })
@@ -30,7 +31,7 @@ export async function POST(req: MedusaRequest, res: MedusaResponse) {
     return res.status(400).json({ message: 'Rating must be between 1 and 5' })
   }
 
-  const reviewsService: any = req.scope.resolve('reviews')
+  const reviewsService = req.scope.resolve<ReviewsService>('reviews')
   const item = await reviewsService.createReviews({
     customer_id,
     product_id,

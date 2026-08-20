@@ -31,7 +31,7 @@ const {
   error,
 } = await useAsyncData(`category-${route.params.handle}`, async () => {
   const { product_categories } = await sdk.store.category.list()
-  return product_categories.find((c: any) => c.handle === route.params.handle) ?? null
+  return product_categories.find((c) => c.handle === route.params.handle) ?? null
 })
 
 const category = computed(() => categoryData.value)

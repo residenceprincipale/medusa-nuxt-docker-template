@@ -26,11 +26,12 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
+import type { CartLineItem } from '~/types/medusa'
 
 const { t } = useI18n()
 
 defineProps<{
-  items: any[]
+  items: CartLineItem[]
   total: number
   currency: string
 }>()

@@ -68,6 +68,7 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
+import type { Order } from '~/types/medusa'
 
 const { t } = useI18n()
 const features = useFeatures()
@@ -83,7 +84,7 @@ const message = ref('')
 const messageType = ref<'ok' | 'err'>('ok')
 const form = reactive({ first_name: '', last_name: '', email: '', phone: '' })
 
-const orders = ref<any[]>([])
+const orders = ref<Order[]>([])
 const ordersLoading = ref(false)
 
 function startEdit() {

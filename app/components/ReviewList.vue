@@ -7,7 +7,7 @@
     <div v-for="(review, index) in reviews" :key="index" class="review-item">
       <div class="review-item__header">
         <span class="review-item__author">{{
-          review.author_name || review.customer?.first_name || t('reviews.anonymous')
+          review.customer?.first_name || t('reviews.anonymous')
         }}</span>
         <span class="review-item__rating">
           <span v-for="star in 5" :key="star">
@@ -20,18 +20,19 @@
         {{ new Date(review.created_at).toLocaleDateString() }}
       </span>
 
-      <p class="review-item__comment">{{ review.comment }}</p>
+      <p class="review-item__comment">{{ review.content }}</p>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
+import type { Review } from '~/types/medusa'
 
 const { t } = useI18n()
 
 defineProps<{
-  reviews: any[]
+  reviews: Review[]
 }>()
 </script>
 

@@ -1,8 +1,10 @@
 // ponytail: localStorage cart state in one composable.
 // Upgrade: move to a Pinia store if you need SSR cart rendering.
 
+import type { Cart } from '~/types/medusa'
+
 export function useCart() {
-  const cart = useState<any>('cart', () => null)
+  const cart = useState<Cart | null>('cart', () => null)
   const medusa = useMedusa()
 
   async function addRegionIdToParams() {
@@ -19,7 +21,7 @@ export function useCart() {
     if (import.meta.client) localStorage.setItem('cart_id', id)
   }
 
-  async function ensureCart(): Promise<any> {
+  async function ensureCart(): Promise<Cart> {
     if (cart.value) return cart.value
 
     const id = getCartId()
@@ -69,7 +71,7 @@ export function useCart() {
   }
 
   const itemCount = computed(() => {
-    return cart.value?.items?.reduce((sum: number, i: any) => sum + i.quantity, 0) ?? 0
+    return cart.value?.items?.reduce((sum: number, i) => sum + i.quantity, 0) ?? 0
   })
 
   return { cart, ensureCart, addItem, updateItem, refresh, itemCount }

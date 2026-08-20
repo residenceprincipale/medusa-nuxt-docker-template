@@ -47,8 +47,8 @@ async function requestReset() {
   try {
     await sdk.auth.resetPassword('customer', 'emailpass', { identifier: email.value })
     sent.value = true
-  } catch (e: any) {
-    error.value = e?.message || 'Request failed'
+  } catch (e) {
+    error.value = e instanceof Error ? e.message : 'Request failed'
   } finally {
     loading.value = false
   }

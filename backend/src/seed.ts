@@ -1,8 +1,10 @@
 import { Modules } from '@medusajs/framework/utils'
 import { createProductsWorkflow } from '@medusajs/medusa/core-flows'
+import { MedusaContainer, Logger } from '@medusajs/framework/types'
+import { BlogService } from './modules/blog/service'
 
-export default async function seedDb({ container }: any) {
-  const logger = container.resolve('logger')
+export default async function seedDb({ container }: { container: MedusaContainer }) {
+  const logger = container.resolve<Logger>('logger')
   logger.info('Seeding database...')
 
   const storeModule = container.resolve(Modules.STORE)
@@ -133,7 +135,7 @@ export default async function seedDb({ container }: any) {
   logger.info(`Created ${sampleProducts.length} sample product(s)`)
 
   try {
-    const blogService = container.resolve('blogService')
+    const blogService = container.resolve<BlogService>('blogService')
     const [existing] = await blogService.listPosts()
     if (!existing.length) {
       await blogService.createPosts([

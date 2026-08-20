@@ -90,6 +90,8 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
+import type { ShippingOption, Order } from '~/types/medusa'
+import type { Stripe } from '@stripe/stripe-js'
 
 const { t } = useI18n()
 const features = useFeatures()
@@ -114,11 +116,11 @@ function addressPayload() {
   return { ...form, country_code: form.country_code.trim().toLowerCase() }
 }
 
-const shippingOptions = ref<any[]>([])
+const shippingOptions = ref<ShippingOption[]>([])
 const selectedShipping = ref('')
 const processing = ref(false)
 const errorMsg = ref('')
-const order = ref<any>(null)
+const order = ref<Order | null>(null)
 const clientSecret = ref('')
 
 onMounted(async () => {
@@ -131,7 +133,7 @@ onMounted(async () => {
         { fields: '*addresses' },
         { Authorization: `Bearer ${authStore.token}` },
       )
-      const addr = customer.addresses?.find((a: any) => a.is_default_shipping) ?? customer.addresses?.[0]
+      const addr = customer.addresses?.find((a) => a.is_default_shipping) ?? customer.addresses?.[0]
       if (addr) {
         Object.assign(form, {
           first_name: addr.first_name || customer.first_name || '',
@@ -166,7 +168,7 @@ onMounted(async () => {
   if (features.stripe) {
     try {
       const pc = await cartStore.createPaymentSession('pp_stripe_stripe')
-      const session = pc?.payment_sessions?.find((s: any) => s.status === 'pending')
+      const session = pc?.payment_sessions?.find((s) => s.status === 'pending')
       if (session?.client_secret) {
         clientSecret.value = session.client_secret
       }
@@ -182,7 +184,7 @@ async function onShippingChange(val: string) {
   await cartStore.setShippingMethod(val)
 }
 
-async function onStripeConfirm(_paymentMethod: any) {
+async function onStripeConfirm(_paymentMethod: Stripe.PaymentMethod | null) {
   await placeOrder()
 }
 
@@ -204,8 +206,8 @@ async function placeOrder() {
     } else {
       errorMsg.value = result?.error?.message || t('common.error')
     }
-  } catch (e: any) {
-    errorMsg.value = e?.message || t('common.error')
+  } catch (e) {
+    errorMsg.value = e instanceof Error ? e.message : t('common.error')
   } finally {
     processing.value = false
   }

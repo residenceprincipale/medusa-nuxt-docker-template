@@ -60,6 +60,9 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
+import type { Product, ProductVariant, Review } from '~/types/medusa'
+
+type ProductWithReviews = Product & { reviews?: Review[] }
 
 const { t } = useI18n()
 const route = useRoute()
@@ -80,7 +83,7 @@ const {
   return { product: products?.[0] ?? null }
 })
 
-const product = computed(() => productData.value?.product)
+const product = computed(() => productData.value?.product as ProductWithReviews | undefined)
 
 useHead({
   title: () => product.value?.title ?? t('common.loading'),
@@ -116,9 +119,9 @@ watchEffect(() => {
 const selectedVariant = computed(() => {
   if (!product.value?.variants?.length) return null
   return (
-    product.value.variants.find((v: any) => {
+    product.value.variants.find((v) => {
       if (!v.options?.length) return true
-      return v.options.every((vo: any) => selectedOptions.value[vo.option_id] === vo.value)
+      return v.options.every((vo) => selectedOptions.value[vo.option_id] === vo.value)
     }) ?? null
   )
 })
@@ -140,7 +143,7 @@ async function handleAdd() {
   }
 }
 
-function formatPrice(v: any): string {
+function formatPrice(v: ProductVariant | null): string {
   const amount = v?.calculated_price?.calculated_amount
   if (amount == null || Number.isNaN(amount)) return ''
   const currency = v?.calculated_price?.currency_code?.toUpperCase() ?? 'USD'

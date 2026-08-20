@@ -32,8 +32,8 @@ async function handleSubscribe(email: string) {
       method: 'POST',
       body: { email },
     })
-  } catch (e: any) {
-    console.error('Newsletter subscription failed:', e?.message)
+  } catch (e) {
+    console.error('Newsletter subscription failed:', e instanceof Error ? e.message : String(e))
   }
 }
 </script>

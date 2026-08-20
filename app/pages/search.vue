@@ -17,6 +17,7 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
+import type { Product } from '~/types/medusa'
 
 const { t } = useI18n()
 const features = useFeatures()
@@ -26,7 +27,7 @@ useHead({ title: t('search.title') })
 useSeoMeta({ title: t('search.title') })
 
 const query = ref('')
-const products = ref<any[]>([])
+const products = ref<Product[]>([])
 const pending = ref(false)
 
 async function onSearch(q: string) {

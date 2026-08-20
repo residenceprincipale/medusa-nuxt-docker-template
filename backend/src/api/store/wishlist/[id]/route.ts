@@ -1,4 +1,5 @@
 import type { MedusaRequest, MedusaResponse } from '@medusajs/framework/http'
+import type { WishlistService } from '../../../modules/wishlist/service'
 
 export async function DELETE(req: MedusaRequest, res: MedusaResponse) {
   const customerId = req.headers['x-customer-id'] as string
@@ -8,7 +9,7 @@ export async function DELETE(req: MedusaRequest, res: MedusaResponse) {
     return res.status(400).json({ message: 'x-customer-id header is required' })
   }
 
-  const wishlistService: any = req.scope.resolve('wishlist')
+  const wishlistService = req.scope.resolve<WishlistService>('wishlist')
   const items = await wishlistService.listWishlists({
     customer_id: customerId,
     product_id: productId,

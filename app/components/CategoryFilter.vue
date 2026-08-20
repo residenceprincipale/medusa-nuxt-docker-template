@@ -17,11 +17,12 @@
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
+import type { Category } from '~/types/medusa'
 
 const { t } = useI18n()
 
 defineProps<{
-  categories: any[]
+  categories: Category[]
   selected: string
 }>()
 
