@@ -57,7 +57,7 @@ Copy the example env file and adjust secrets:
 cp .env.example .env
 ```
 
-At minimum, set strong values for `JWT_SECRET` and `COOKIE_SECRET`. For Stripe payments, fill in `STRIPE_API_KEY` and `STRIPE_WEBHOOK_SECRET` (leave empty to skip).
+At minimum, set strong values for `JWT_SECRET` and `COOKIE_SECRET`. For Stripe payments, fill in `STRIPE_API_KEY` and `STRIPE_WEBHOOK_SECRET` (leave empty to skip). For file storage, leave the `S3_*` vars empty to use local `/static` (persisted by the `medusa_static` volume) or fill them in to store uploads in S3.
 
 ### 2. Start the stack
 
@@ -214,6 +214,27 @@ export const features = {
 ### Backend modules
 
 Custom modules and Stripe are wired in [`backend/medusa-config.js`](backend/medusa-config.js). Stripe is auto-registered when `STRIPE_API_KEY` is present.
+
+#### File storage (S3, optional)
+
+By default Medusa uses its local file provider: uploads are written to `/app/static` inside the backend container and served from `/static`, persisted across recreates by the `medusa_static` volume.
+
+To use S3 instead (or any S3-compatible store like MinIO/R2), set these in `.env` and rebuild the backend:
+
+```bash
+S3_BUCKET=my-bucket
+S3_REGION=us-east-1
+S3_ACCESS_KEY_ID=...
+S3_SECRET_ACCESS_KEY=...
+S3_ENDPOINT=https://s3.us-east-1.amazonaws.com   # optional, for S3-compatible stores
+S3_PREFIX=media                                   # optional object-key prefix
+```
+
+```bash
+docker compose build backend && docker compose up -d backend
+```
+
+When `S3_BUCKET` is set, Medusa swaps in `@medusajs/file-s3` and serves image URLs directly from S3, so the storefront and admin need no `/static` mount. Leave all `S3_*` vars empty to keep the local provider.
 
 ---
 
