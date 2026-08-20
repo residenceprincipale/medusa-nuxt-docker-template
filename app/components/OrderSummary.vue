@@ -4,7 +4,7 @@
 
     <ul class="order-summary__items">
       <li v-for="item in items" :key="item.id" class="order-summary__item">
-        <img :src="item.thumbnail || '/no-image.svg'" :alt="item.title" class="order-summary__image" />
+        <img :src="item.thumbnail || item.images?.[0]?.url || '/no-image.svg'" :alt="item.title" class="order-summary__image" />
 
         <div class="order-summary__details">
           <span class="order-summary__name">{{ item.title }}</span>

@@ -17,7 +17,7 @@
 
       <div class="order-detail__items">
         <div v-for="item in order.items" :key="item.id" class="order-detail__item">
-          <img :src="item.thumbnail || '/no-image.svg'" :alt="item.title" />
+          <img :src="item.thumbnail || item.images?.[0]?.url || '/no-image.svg'" :alt="item.title" />
           <div class="details">
             <div class="name">{{ item.title }}</div>
             <div class="variant">{{ item.variant_title || item.variant?.title }}</div>

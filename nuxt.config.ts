@@ -1,6 +1,6 @@
 export default defineNuxtConfig({
   compatibilityDate: '2026-08-20',
-  devtools: { enabled: false },
+  devtools: { enabled: true },
   ssr: true,
 
   modules: ['@pinia/nuxt', '@nuxtjs/i18n', '@vueuse/nuxt'],
