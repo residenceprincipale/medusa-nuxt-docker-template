@@ -95,6 +95,7 @@ const { t } = useI18n()
 const features = useFeatures()
 const sdk = useMedusa()
 const cartStore = useCartStore()
+const authStore = useAuthStore()
 
 useHead({ title: t('checkout.title') })
 useSeoMeta({ title: t('checkout.title') })
@@ -106,8 +107,12 @@ const form = reactive({
   address_1: '',
   city: '',
   postal_code: '',
-  country_code: 'US',
+  country_code: 'us',
 })
+
+function addressPayload() {
+  return { ...form, country_code: form.country_code.trim().toLowerCase() }
+}
 
 const shippingOptions = ref<any[]>([])
 const selectedShipping = ref('')
@@ -120,7 +125,32 @@ onMounted(async () => {
   const cart = await cartStore.ensureCart()
   if (!cart) return
 
-  await cartStore.updateShippingAddress({ ...form })
+  if (authStore.isLoggedIn && authStore.token) {
+    try {
+      const { customer } = await sdk.store.customer.retrieve(
+        { fields: '*addresses' },
+        { Authorization: `Bearer ${authStore.token}` },
+      )
+      const addr = customer.addresses?.find((a: any) => a.is_default_shipping) ?? customer.addresses?.[0]
+      if (addr) {
+        Object.assign(form, {
+          first_name: addr.first_name || customer.first_name || '',
+          last_name: addr.last_name || customer.last_name || '',
+          email: customer.email || form.email,
+          address_1: addr.address_1 || '',
+          city: addr.city || '',
+          postal_code: addr.postal_code || '',
+          country_code: addr.country_code || 'us',
+        })
+      } else if (customer.email) {
+        form.email = customer.email
+      }
+    } catch {
+      /* recovery is best-effort */
+    }
+  }
+
+  await cartStore.updateShippingAddress(addressPayload())
 
   try {
     const { shipping_options } = await sdk.store.fulfillment.listCartOptions({ cart_id: cart.id })
@@ -135,7 +165,7 @@ onMounted(async () => {
 
   if (features.stripe) {
     try {
-      const pc = await cartStore.createPaymentSession('stripe')
+      const pc = await cartStore.createPaymentSession('pp_stripe_stripe')
       const session = pc?.payment_sessions?.find((s: any) => s.status === 'pending')
       if (session?.client_secret) {
         clientSecret.value = session.client_secret
@@ -161,10 +191,10 @@ async function placeOrder() {
   errorMsg.value = ''
 
   try {
-    await cartStore.updateShippingAddress({ ...form })
+    await cartStore.updateShippingAddress(addressPayload())
 
     if (!features.stripe) {
-      await cartStore.createPaymentSession('system_default')
+      await cartStore.createPaymentSession('pp_system_default')
     }
 
     const result = await cartStore.complete()
