@@ -3,11 +3,16 @@
 # Usage: docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d
 
 services:
+  backend:
+    ports:
+      - '9000:9000'
   storefront:
     build: null
     image: oven/bun:1
     command: sh -c "bun install && bun run dev --host"
     working_dir: /app
+    ports:
+      - '3000:3000'
     volumes:
       - .:/app
       - /app/node_modules

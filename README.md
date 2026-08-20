@@ -89,7 +89,7 @@ docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d
 
 ```bash
 # Backend + deps in Docker, exposed at localhost:9000
-docker compose up -d backend
+docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d backend 
 
 # Storefront on the host (server + browser both hit localhost:9000)
 NUXT_SERVER_MEDUSA_BACKEND=http://localhost:9000 \
