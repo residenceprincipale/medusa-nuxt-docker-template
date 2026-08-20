@@ -1,6 +1,6 @@
 <template>
   <div v-if="features.wishlist">
-    <h1 style="margin-bottom: 1.5rem; font-size: 1.5rem">{{ t('wishlist.title') }}</h1>
+    <h1 class="page-title">{{ t('wishlist.title') }}</h1>
 
     <div v-if="!wishlistIds.length" class="cart-empty">{{ t('wishlist.empty') }}</div>
 
@@ -52,3 +52,11 @@ onMounted(async () => {
   }
 })
 </script>
+
+<style scoped>
+.page-title {
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+</style>

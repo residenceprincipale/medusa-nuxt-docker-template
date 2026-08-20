@@ -1,6 +1,6 @@
 <template>
   <div v-if="features.orderTracking">
-    <h1 style="margin-bottom: 1.5rem; font-size: 1.5rem">{{ t('orderTracking.title') }}</h1>
+    <h1 class="page-title">{{ t('orderTracking.title') }}</h1>
 
     <div v-if="pending" class="loading">{{ t('common.loading') }}</div>
     <div v-else-if="error || !order" class="error">{{ t('orderTracking.notFound') }}</div>
@@ -113,5 +113,10 @@ function formatMoney(amount: number | undefined, currency = 'usd'): string {
   font-weight: 600;
   min-width: 70px;
   text-align: right;
+}
+.page-title {
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  font-weight: 700;
 }
 </style>

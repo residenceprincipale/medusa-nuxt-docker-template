@@ -1,10 +1,10 @@
 <template>
   <div v-if="features.auth">
-    <h1 style="margin-bottom: 1.5rem; font-size: 1.5rem">{{ t('account.title') }}</h1>
+    <h1 class="page-title">{{ t('account.title') }}</h1>
 
     <div v-if="!authStore.isLoggedIn" class="cart-empty">
       <p>{{ t('auth.loginTitle') }}</p>
-      <UiButton to="/auth/login" style="margin-top: 1rem">{{ t('auth.loginButton') }}</UiButton>
+      <UiButton to="/auth/login" class="login-cta">{{ t('auth.loginButton') }}</UiButton>
     </div>
 
     <div v-else-if="authStore.customer">
@@ -81,5 +81,13 @@ function formatMoney(amount: number | undefined, currency = 'usd'): string {
   border-bottom: 1px solid var(--border);
   text-decoration: none;
   color: inherit;
+}
+.page-title {
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+.login-cta {
+  margin-top: 1rem;
 }
 </style>

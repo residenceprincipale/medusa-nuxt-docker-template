@@ -1,21 +1,21 @@
 <template>
   <div>
-    <h1 style="margin-bottom: 1.5rem; font-size: 1.5rem">{{ t('checkout.title') }}</h1>
+    <h1 class="page-title">{{ t('checkout.title') }}</h1>
 
     <div v-if="order" class="success-box">
       <h2>{{ t('checkout.orderPlaced') }}</h2>
       <p>
         {{ t('checkout.orderId') }}: <strong>{{ order.id }}</strong>
       </p>
-      <UiButton to="/" style="margin-top: 1rem">{{ t('checkout.continueShopping') }}</UiButton>
+      <UiButton to="/" class="checkout-cta">{{ t('checkout.continueShopping') }}</UiButton>
     </div>
 
     <div v-else-if="cartStore.isEmpty" class="cart-empty">
       <p>{{ t('checkout.empty') }}</p>
-      <UiButton to="/" style="margin-top: 1rem">{{ t('checkout.browse') }}</UiButton>
+      <UiButton to="/" class="checkout-cta">{{ t('checkout.browse') }}</UiButton>
     </div>
 
-    <div v-else style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem">
+    <div v-else class="checkout-grid">
       <form class="checkout-form" @submit.prevent="placeOrder">
         <h2>{{ t('checkout.shipping') }}</h2>
 
@@ -76,11 +76,11 @@
           <span>{{ formatMoney(cartStore.total, cartStore.currency) }}</span>
         </div>
 
-        <UiButton type="submit" block style="margin-top: 1rem" :disabled="processing">
+        <UiButton type="submit" block class="checkout-cta" :disabled="processing">
           {{ processing ? t('checkout.processing') : t('checkout.placeOrder') }}
         </UiButton>
 
-        <p v-if="errorMsg" style="color: #dc2626; margin-top: 0.75rem; font-size: 0.9rem">{{ errorMsg }}</p>
+        <p v-if="errorMsg" class="checkout-error">{{ errorMsg }}</p>
       </form>
 
       <OrderSummary :items="cartStore.items" :total="cartStore.total" :currency="cartStore.currency" />
@@ -193,6 +193,19 @@ function formatMoney(amount: number | undefined, currency = 'usd'): string {
 <style scoped>
 .checkout-form {
   max-width: 48ch;
+}
+.checkout-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+.checkout-cta {
+  margin-top: 1rem;
+}
+.checkout-error {
+  color: var(--error);
+  margin-top: 0.75rem;
+  font-size: 0.9rem;
 }
 .checkout-form h2 {
   font-size: 1.25rem;

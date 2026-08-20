@@ -1,8 +1,8 @@
 <template>
   <div v-if="features.contact">
-    <h1 style="margin-bottom: 1.5rem; font-size: 1.5rem">{{ t('contact.title') }}</h1>
+    <h1 class="page-title">{{ t('contact.title') }}</h1>
 
-    <form class="contact-form" @submit.prevent="handleSubmit" style="max-width: 500px">
+    <form class="contact-form" @submit.prevent="handleSubmit">
       <div class="form-group">
         <label>{{ t('contact.name') }}</label>
         <UiInput v-model="form.name" required />
@@ -18,11 +18,11 @@
         <UiInput multiline v-model="form.message" rows="5" required />
       </div>
 
-      <p v-if="submitted" style="color: #166534; margin-bottom: 1rem; font-size: 0.9rem">
+      <p v-if="submitted" class="contact-success">
         {{ t('contact.success') }}
       </p>
 
-      <p v-if="errorMsg" style="color: #dc2626; margin-bottom: 1rem; font-size: 0.9rem">
+      <p v-if="errorMsg" class="contact-error">
         {{ errorMsg }}
       </p>
 
@@ -68,3 +68,24 @@ async function handleSubmit() {
   }
 }
 </script>
+
+<style scoped>
+.page-title {
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+.contact-form {
+  max-width: 500px;
+}
+.contact-success {
+  color: var(--success);
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+.contact-error {
+  color: var(--error);
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+</style>

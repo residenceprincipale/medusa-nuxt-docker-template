@@ -1,10 +1,10 @@
 <template>
   <div>
-    <h1 style="margin-bottom: 1.5rem; font-size: 1.5rem">{{ t('cart.title') }}</h1>
+    <h1 class="page-title">{{ t('cart.title') }}</h1>
 
     <div v-if="cartStore.isEmpty" class="cart-empty">
       <p>{{ t('cart.empty') }}</p>
-      <UiButton to="/" style="margin-top: 1rem">{{ t('cart.browse') }}</UiButton>
+      <UiButton to="/" class="cart-browse">{{ t('cart.browse') }}</UiButton>
     </div>
 
     <div v-else>
@@ -25,15 +25,15 @@
         <UiButton variant="remove" @click="remove(item.id)">{{ t('cart.remove') }}</UiButton>
       </div>
 
-      <div v-if="features.promotions" style="margin: 1.5rem 0">
-        <div style="display: flex; gap: 0.5rem; align-items: center">
+      <div v-if="features.promotions" class="promo-block">
+        <div class="promo-row">
           <UiInput v-model="promoCode" type="text" :placeholder="t('cart.promoCode')" />
           <UiButton variant="outline" @click="applyPromo">{{ t('cart.apply') }}</UiButton>
         </div>
         <div
           v-for="promo in appliedPromos"
           :key="promo"
-          style="display: flex; gap: 0.5rem; align-items: center; margin-top: 0.5rem"
+          class="promo-row promo-row--stacked"
         >
           <span>{{ promo }}</span>
           <UiButton variant="remove" @click="removePromo(promo)">{{ t('cart.removePromo') }}</UiButton>
@@ -147,5 +147,24 @@ function formatMoney(amount: number | undefined, currency = 'usd'): string {
   margin-top: 1.5rem;
   display: flex;
   gap: 0.75rem;
+}
+.page-title {
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+.cart-browse {
+  margin-top: 1rem;
+}
+.promo-block {
+  margin: 1.5rem 0;
+}
+.promo-row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+.promo-row--stacked {
+  margin-top: 0.5rem;
 }
 </style>

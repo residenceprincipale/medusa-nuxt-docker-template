@@ -1,6 +1,6 @@
 <template>
   <div v-if="features.about">
-    <h1 style="margin-bottom: 1.5rem; font-size: 1.5rem">{{ t('about.title') }}</h1>
+    <h1 class="page-title">{{ t('about.title') }}</h1>
     <p>{{ t('about.content') }}</p>
   </div>
 </template>
@@ -14,3 +14,11 @@ const features = useFeatures()
 useHead({ title: t('about.title') })
 useSeoMeta({ title: t('about.title'), description: t('about.content') })
 </script>
+
+<style scoped>
+.page-title {
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+</style>

@@ -10,6 +10,8 @@
   --fg: #111;
   --muted: #666;
   --border: #ddd;
+  --success: #166534;
+  --error: #dc2626;
   --max-w: 920px;
   --font: Georgia, 'Iowan Old Style', 'Times New Roman', serif;
 }

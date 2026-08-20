@@ -24,7 +24,7 @@
       </div>
 
       <div>
-        <div style="display: flex; align-items: center; gap: 0.5rem">
+        <div class="product-title-row">
           <h1 class="title">{{ product.title }}</h1>
           <WishlistButton v-if="features.wishlist" :product-id="product.id" />
         </div>
@@ -45,7 +45,7 @@
           {{ adding ? t('product.adding') : t('product.addToCart') }}
         </UiButton>
 
-        <p v-if="added" style="text-align: center; margin-top: 0.75rem; color: #166534; font-size: 0.9rem">
+        <p v-if="added" class="add-success">
           {{ t('product.added') }}
         </p>
       </div>
@@ -210,5 +210,16 @@ function formatPrice(v: any): string {
     grid-template-columns: 1fr;
     gap: 1.5rem;
   }
+}
+.product-title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.add-success {
+  text-align: center;
+  margin-top: 0.75rem;
+  color: var(--success);
+  font-size: 0.9rem;
 }
 </style>

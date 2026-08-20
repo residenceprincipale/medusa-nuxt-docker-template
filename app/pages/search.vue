@@ -1,8 +1,8 @@
 <template>
   <div v-if="features.search">
-    <h1 style="margin-bottom: 1.5rem; font-size: 1.5rem">{{ t('search.title') }}</h1>
+    <h1 class="page-title">{{ t('search.title') }}</h1>
 
-    <div style="margin-bottom: 1.5rem">
+    <div class="search-bar-block">
       <SearchBar @search="onSearch" />
     </div>
 
@@ -50,3 +50,14 @@ async function onSearch(q: string) {
   }
 }
 </script>
+
+<style scoped>
+.page-title {
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+.search-bar-block {
+  margin-bottom: 1.5rem;
+}
+</style>

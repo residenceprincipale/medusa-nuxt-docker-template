@@ -1,16 +1,16 @@
 <template>
   <div>
-    <h1 style="margin-bottom: 1.5rem; font-size: 1.5rem">{{ t('home.title') }}</h1>
+    <h1 class="page-title">{{ t('home.title') }}</h1>
 
-    <div v-if="features.search" style="margin-bottom: 1rem">
+    <div v-if="features.search" class="toolbar-item">
       <SearchBar @search="onSearch" />
     </div>
 
-    <div v-if="features.categories && categories.length" style="margin-bottom: 1rem">
+    <div v-if="features.categories && categories.length" class="toolbar-item">
       <CategoryFilter :categories="categories" :selected="selectedCategory" @select="onCategorySelect" />
     </div>
 
-    <div style="margin-bottom: 1rem">
+    <div class="toolbar-item">
       <UiSelect v-model="sortBy">
         <option value="">{{ t('common.currency') }}</option>
         <option value="-created_at">Newest</option>
@@ -121,5 +121,13 @@ function onCategorySelect(handle: string) {
   100% {
     background-position: 0 0;
   }
+}
+.page-title {
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+.toolbar-item {
+  margin-bottom: 1rem;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div v-if="features.blog">
-    <h1 style="margin-bottom: 1.5rem; font-size: 1.5rem">{{ t('blog.title') }}</h1>
+    <h1 class="page-title">{{ t('blog.title') }}</h1>
 
     <div v-if="pending" class="loading">{{ t('common.loading') }}</div>
     <div v-else-if="error" class="error">{{ t('common.error') }}</div>
@@ -53,5 +53,10 @@ const posts = computed(() => (data.value as any)?.posts ?? data.value ?? [])
 .blog-card__date {
   color: var(--muted);
   font-size: 0.85rem;
+}
+.page-title {
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  font-weight: 700;
 }
 </style>

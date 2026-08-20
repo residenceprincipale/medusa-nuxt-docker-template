@@ -4,8 +4,8 @@
     <div v-else-if="error || !category" class="error">{{ t('common.error') }}</div>
 
     <div v-else>
-      <h1 style="margin-bottom: 0.5rem; font-size: 1.5rem">{{ category.name }}</h1>
-      <p v-if="category.description" style="margin-bottom: 1.5rem; color: #666">{{ category.description }}</p>
+      <h1 class="category-title">{{ category.name }}</h1>
+      <p v-if="category.description" class="category-desc">{{ category.description }}</p>
 
       <div v-if="productsPending" class="loading">{{ t('common.loading') }}</div>
       <div v-else-if="!products.length" class="cart-empty">{{ t('home.empty') }}</div>
@@ -56,3 +56,14 @@ const { data: productData, pending: productsPending } = await useAsyncData(
 
 const products = computed(() => productData.value?.products ?? [])
 </script>
+
+<style scoped>
+.category-title {
+  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+}
+.category-desc {
+  margin-bottom: 1.5rem;
+  color: var(--muted);
+}
+</style>
