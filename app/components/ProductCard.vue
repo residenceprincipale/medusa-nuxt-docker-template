@@ -1,7 +1,7 @@
 <template>
   <NuxtLink :to="`/products/${product.handle}`" class="product-card">
     <div class="product-card__image">
-      <img :src="product.thumbnail || product.images?.[0]?.url || '/no-image.svg'" :alt="product.title" loading="lazy" />
+      <img :src="product.thumbnail || '/no-image.svg'" :alt="product.title" loading="lazy" />
     </div>
 
     <div class="product-card__info">

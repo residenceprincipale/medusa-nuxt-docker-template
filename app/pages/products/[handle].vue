@@ -6,7 +6,7 @@
     <div v-else class="product-detail">
       <div class="product-gallery">
         <img
-          :src="selectedImage || product.thumbnail || product.images?.[0]?.url || '/no-image.svg'"
+          :src="selectedImage || product.thumbnail || '/no-image.svg'"
           :alt="product.title"
           class="product-gallery__main"
         />
@@ -91,7 +91,7 @@ useSeoMeta({
   description: () => product.value?.description ?? '',
   ogTitle: () => product.value?.title,
   ogDescription: () => product.value?.description,
-  ogImage: () => product.value?.thumbnail || product.value?.images?.[0]?.url,
+  ogImage: () => product.value?.thumbnail,
 })
 
 const selectedImage = ref<string | null>(null)

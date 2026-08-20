@@ -9,7 +9,7 @@
 
     <div v-else>
       <div v-for="item in cartStore.items" :key="item.id" class="cart-item">
-        <img :src="item.thumbnail || item.images?.[0]?.url || '/no-image.svg'" :alt="item.title" />
+        <img :src="item.thumbnail || '/no-image.svg'" :alt="item.title" />
         <div class="details">
           <div class="name">{{ item.title }}</div>
           <div class="variant">{{ item.variant_title || item.variant?.title }}</div>
@@ -30,11 +30,7 @@
           <UiInput v-model="promoCode" type="text" :placeholder="t('cart.promoCode')" />
           <UiButton variant="outline" @click="applyPromo">{{ t('cart.apply') }}</UiButton>
         </div>
-        <div
-          v-for="promo in appliedPromos"
-          :key="promo"
-          class="promo-row promo-row--stacked"
-        >
+        <div v-for="promo in appliedPromos" :key="promo" class="promo-row promo-row--stacked">
           <span>{{ promo }}</span>
           <UiButton variant="remove" @click="removePromo(promo)">{{ t('cart.removePromo') }}</UiButton>
         </div>
@@ -67,6 +63,14 @@ const promoCode = ref('')
 const appliedPromos = ref<string[]>([])
 
 onMounted(() => cartStore.ensureCart())
+
+watch(
+  () => cartStore.items,
+  (newItems) => {
+    console.log('Cart items changed:', newItems)
+  },
+  { deep: true },
+)
 
 async function changeQty(item: any, qty: number) {
   if (qty < 1) {
