@@ -42,7 +42,7 @@ export const useCartStore = defineStore('cart', {
         }
       }
 
-      const { cart } = await sdk.store.cart.create(regionId ? { region_id: regionId } : {}, { fields: CART_FIELDS })
+      const { cart } = await sdk.store.cart.create(regionId ? { region_id: regionId } : {})
       this.setCartId(cart.id)
       this.cart = cart
       return this.cart
@@ -51,14 +51,10 @@ export const useCartStore = defineStore('cart', {
     async addItem(variantId: string, quantity = 1) {
       await this.ensureCart()
       const sdk = useMedusa()
-      const { cart } = await sdk.store.cart.createLineItem(
-        this.cart.id,
-        {
-          variant_id: variantId,
-          quantity,
-        },
-        { fields: CART_FIELDS },
-      )
+      const { cart } = await sdk.store.cart.createLineItem(this.cart.id, {
+        variant_id: variantId,
+        quantity,
+      })
       this.cart = cart
     },
 
@@ -69,12 +65,7 @@ export const useCartStore = defineStore('cart', {
         await sdk.store.cart.deleteLineItem(this.cart.id, lineItemId)
         await this.refresh()
       } else {
-        const { cart } = await sdk.store.cart.updateLineItem(
-          this.cart.id,
-          lineItemId,
-          { quantity },
-          { fields: CART_FIELDS },
-        )
+        const { cart } = await sdk.store.cart.updateLineItem(this.cart.id, lineItemId, { quantity })
         this.cart = cart
       }
     },
@@ -90,7 +81,7 @@ export const useCartStore = defineStore('cart', {
       if (!this.cart) return
       const sdk = useMedusa()
       try {
-        const { cart } = await sdk.store.cart.retrieve(this.cart.id, { fields: CART_FIELDS })
+        const { cart } = await sdk.store.cart.retrieve(this.cart.id)
         this.cart = cart
       } catch {
         // stale
