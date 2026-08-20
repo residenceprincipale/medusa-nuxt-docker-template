@@ -24,9 +24,17 @@ import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
 const features = useFeatures()
+const sdk = useMedusa()
 
-function handleSubscribe(email: string) {
-  console.log('Newsletter subscription:', email)
+async function handleSubscribe(email: string) {
+  try {
+    await sdk.client.fetch('/store/newsletter', {
+      method: 'POST',
+      body: { email },
+    })
+  } catch (e: any) {
+    console.error('Newsletter subscription failed:', e?.message)
+  }
 }
 </script>
 

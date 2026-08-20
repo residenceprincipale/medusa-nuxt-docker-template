@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@medusajs/admin-sdk": "2.19.0",
+    "nodemailer": "6.10.1",
     "@medusajs/admin-shared": "2.19.0",
     "@medusajs/cli": "2.19.0",
     "@medusajs/dashboard": "2.19.0",
@@ -24,6 +25,7 @@
     "zod": "4.4.3"
   },
   "devDependencies": {
+    "@types/nodemailer": "6.4.17",
     "@types/node": "26.2.0",
     "typescript": "5.8.3",
     "vite": "7.3.6"

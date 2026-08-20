@@ -44,6 +44,7 @@ services:
       STORE_CORS: ${STORE_CORS:-http://localhost:3000}
       ADMIN_CORS: ${ADMIN_CORS:-http://localhost:9000}
       AUTH_CORS: ${AUTH_CORS:-http://localhost:3000,http://localhost:9000}
+      MEDUSA_DISABLE_TELEMETRY: false
       STRIPE_API_KEY: ${STRIPE_API_KEY:-}
       STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET:-}
       S3_BUCKET: ${S3_BUCKET:-}

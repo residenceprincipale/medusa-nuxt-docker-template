@@ -11,6 +11,7 @@
       <div class="form-group">
         <label>{{ t('auth.password') }}</label>
         <UiInput v-model="password" type="password" required />
+        <NuxtLink to="/auth/forgot-password" class="forgot">{{ t('auth.forgotPassword') }}</NuxtLink>
       </div>
 
       <p v-if="authStore.error" class="auth-error">
@@ -71,5 +72,10 @@ async function handleLogin() {
   margin-top: 1rem;
   text-align: center;
   font-size: 0.9rem;
+}
+.forgot {
+  display: inline-block;
+  margin-top: 0.3rem;
+  font-size: 0.8rem;
 }
 </style>

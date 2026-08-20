@@ -11,7 +11,7 @@ export const features = {
   blog: false,
   about: true,
   contact: true,
-  orderTracking: false,
+  orderTracking: true,
 } as const
 
 export type FeatureFlags = typeof features
