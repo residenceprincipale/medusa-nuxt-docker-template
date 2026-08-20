@@ -5,25 +5,21 @@
     <form class="auth-form" @submit.prevent="handleLogin" style="max-width: 400px">
       <div class="form-group">
         <label>{{ t('auth.email') }}</label>
-        <input v-model="email" type="email" required />
+        <UiInput v-model="email" type="email" required />
       </div>
 
       <div class="form-group">
         <label>{{ t('auth.password') }}</label>
-        <input v-model="password" type="password" required />
+        <UiInput v-model="password" type="password" required />
       </div>
 
       <p v-if="authStore.error" style="color: #dc2626; margin-bottom: 1rem; font-size: 0.9rem">
         {{ authStore.error }}
       </p>
 
-      <button
-        type="submit"
-        class="btn btn-primary btn-block"
-        :disabled="authStore.loading"
-      >
+      <UiButton type="submit" block :disabled="authStore.loading">
         {{ authStore.loading ? t('auth.loggingIn') : t('auth.loginButton') }}
-      </button>
+      </UiButton>
 
       <p style="margin-top: 1rem; text-align: center; font-size: 0.9rem">
         {{ t('auth.noAccount') }}
@@ -51,6 +47,8 @@ async function handleLogin() {
   try {
     await authStore.login(email.value, password.value)
     router.push('/account')
-  } catch { /* error displayed from store */ }
+  } catch {
+    /* error displayed from store */
+  }
 }
 </script>

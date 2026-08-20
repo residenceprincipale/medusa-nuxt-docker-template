@@ -18,7 +18,11 @@ export const useAuthStore = defineStore('auth', {
         this.token = localStorage.getItem('auth_token')
         const stored = localStorage.getItem('auth_customer')
         if (stored) {
-          try { this.customer = JSON.parse(stored) } catch { /* ignore */ }
+          try {
+            this.customer = JSON.parse(stored)
+          } catch {
+            /* ignore */
+          }
         }
       }
     },
@@ -81,7 +85,9 @@ export const useAuthStore = defineStore('auth', {
       const sdk = useMedusa()
       try {
         await sdk.auth.logout()
-      } catch { /* ignore */ }
+      } catch {
+        /* ignore */
+      }
       this.token = null
       this.customer = null
       if (import.meta.client) {

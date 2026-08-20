@@ -1,16 +1,16 @@
-const { loadEnv, defineConfig } = require("@medusajs/framework/utils")
+const { loadEnv, defineConfig } = require('@medusajs/framework/utils')
 
-loadEnv(process.env.NODE_ENV || "development", process.cwd())
+loadEnv(process.env.NODE_ENV || 'development', process.cwd())
 
 const modules = []
 
 if (process.env.STRIPE_API_KEY) {
   modules.push({
-    resolve: "@medusajs/payment-stripe",
-    id: "stripe",
+    resolve: '@medusajs/payment-stripe',
+    id: 'stripe',
     options: {
       apiKey: process.env.STRIPE_API_KEY,
-      webhookSecret: process.env.STRIPE_WEBHOOK_SECRET || "",
+      webhookSecret: process.env.STRIPE_WEBHOOK_SECRET || '',
       capture: true,
     },
   })
@@ -37,13 +37,13 @@ module.exports = defineConfig({
   modules: [
     ...modules,
     {
-      resolve: "./src/modules/wishlist/module",
+      resolve: './src/modules/wishlist/module',
     },
     {
-      resolve: "./src/modules/reviews/module",
+      resolve: './src/modules/reviews/module',
     },
     {
-      resolve: "./src/modules/blog/module",
+      resolve: './src/modules/blog/module',
     },
   ],
 })

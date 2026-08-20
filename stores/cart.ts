@@ -119,7 +119,9 @@ export const useCartStore = defineStore('cart', {
     async createPaymentSession(providerId: string) {
       if (!this.cart) return
       const sdk = useMedusa()
-      const { payment_collection } = await sdk.store.payment.initiatePaymentSession(this.cart, { provider_id: providerId })
+      const { payment_collection } = await sdk.store.payment.initiatePaymentSession(this.cart, {
+        provider_id: providerId,
+      })
       return payment_collection
     },
 

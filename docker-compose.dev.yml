@@ -1,0 +1,17 @@
+# Dev override: runs the storefront with hot reload (Nuxt dev) and a source mount,
+# so editing *.vue / composables / stores is picked up without rebuilding the image.
+# Usage: docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d
+
+services:
+  storefront:
+    build: null
+    image: oven/bun:1
+    command: sh -c "bun install && bun run dev --host"
+    working_dir: /app
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      NUXT_PUBLIC_MEDUSA_BACKEND: http://localhost:9000
+      NUXT_SERVER_MEDUSA_BACKEND: http://backend:9000
+      NUXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY: ${MEDUSA_PUBLISHABLE_KEY:-}

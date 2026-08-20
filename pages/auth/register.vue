@@ -6,35 +6,31 @@
       <div class="form-row">
         <div class="form-group">
           <label>{{ t('auth.firstName') }}</label>
-          <input v-model="form.first_name" required />
+          <UiInput v-model="form.first_name" required />
         </div>
         <div class="form-group">
           <label>{{ t('auth.lastName') }}</label>
-          <input v-model="form.last_name" required />
+          <UiInput v-model="form.last_name" required />
         </div>
       </div>
 
       <div class="form-group">
         <label>{{ t('auth.email') }}</label>
-        <input v-model="form.email" type="email" required />
+        <UiInput v-model="form.email" type="email" required />
       </div>
 
       <div class="form-group">
         <label>{{ t('auth.password') }}</label>
-        <input v-model="form.password" type="password" required />
+        <UiInput v-model="form.password" type="password" required />
       </div>
 
       <p v-if="authStore.error" style="color: #dc2626; margin-bottom: 1rem; font-size: 0.9rem">
         {{ authStore.error }}
       </p>
 
-      <button
-        type="submit"
-        class="btn btn-primary btn-block"
-        :disabled="authStore.loading"
-      >
+      <UiButton type="submit" block :disabled="authStore.loading">
         {{ authStore.loading ? t('auth.registering') : t('auth.registerButton') }}
-      </button>
+      </UiButton>
 
       <p style="margin-top: 1rem; text-align: center; font-size: 0.9rem">
         {{ t('auth.hasAccount') }}
@@ -66,6 +62,8 @@ async function handleRegister() {
   try {
     await authStore.register(form)
     router.push('/account')
-  } catch { /* error displayed from store */ }
+  } catch {
+    /* error displayed from store */
+  }
 }
 </script>

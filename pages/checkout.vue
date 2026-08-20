@@ -4,63 +4,65 @@
 
     <div v-if="order" class="success-box">
       <h2>{{ t('checkout.orderPlaced') }}</h2>
-      <p>{{ t('checkout.orderId') }}: <strong>{{ order.id }}</strong></p>
-      <NuxtLink to="/" class="btn btn-primary" style="margin-top: 1rem">{{ t('checkout.continueShopping') }}</NuxtLink>
+      <p>
+        {{ t('checkout.orderId') }}: <strong>{{ order.id }}</strong>
+      </p>
+      <UiButton to="/" style="margin-top: 1rem">{{ t('checkout.continueShopping') }}</UiButton>
     </div>
 
     <div v-else-if="cartStore.isEmpty" class="cart-empty">
       <p>{{ t('checkout.empty') }}</p>
-      <NuxtLink to="/" class="btn btn-primary" style="margin-top: 1rem">{{ t('checkout.browse') }}</NuxtLink>
+      <UiButton to="/" style="margin-top: 1rem">{{ t('checkout.browse') }}</UiButton>
     </div>
 
-    <div v-else style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+    <div v-else style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem">
       <form class="checkout-form" @submit.prevent="placeOrder">
         <h2>{{ t('checkout.shipping') }}</h2>
 
         <div class="form-row">
           <div class="form-group">
             <label>{{ t('checkout.firstName') }}</label>
-            <input v-model="form.first_name" required />
+            <UiInput v-model="form.first_name" required />
           </div>
           <div class="form-group">
             <label>{{ t('checkout.lastName') }}</label>
-            <input v-model="form.last_name" required />
+            <UiInput v-model="form.last_name" required />
           </div>
         </div>
 
         <div class="form-group">
           <label>{{ t('checkout.email') }}</label>
-          <input v-model="form.email" type="email" required />
+          <UiInput v-model="form.email" type="email" required />
         </div>
 
         <div class="form-group">
           <label>{{ t('checkout.address') }}</label>
-          <input v-model="form.address_1" required />
+          <UiInput v-model="form.address_1" required />
         </div>
 
         <div class="form-row">
           <div class="form-group">
             <label>{{ t('checkout.city') }}</label>
-            <input v-model="form.city" required />
+            <UiInput v-model="form.city" required />
           </div>
           <div class="form-group">
             <label>{{ t('checkout.postalCode') }}</label>
-            <input v-model="form.postal_code" required />
+            <UiInput v-model="form.postal_code" required />
           </div>
         </div>
 
         <div class="form-group">
           <label>{{ t('checkout.country') }}</label>
-          <input v-model="form.country_code" required placeholder="US" maxlength="2" />
+          <UiInput v-model="form.country_code" required placeholder="US" maxlength="2" />
         </div>
 
         <div v-if="shippingOptions.length" class="form-group">
           <label>{{ t('checkout.shippingMethod') }}</label>
-          <select v-model="selectedShipping" @change="onShippingChange">
+          <UiSelect :model-value="selectedShipping" @update:modelValue="onShippingChange">
             <option v-for="opt in shippingOptions" :key="opt.id" :value="opt.id">
               {{ opt.name }} — {{ formatMoney(opt.amount, cartStore.currency) }}
             </option>
-          </select>
+          </UiSelect>
         </div>
 
         <PaymentStripe
@@ -74,23 +76,14 @@
           <span>{{ formatMoney(cartStore.total, cartStore.currency) }}</span>
         </div>
 
-        <button
-          type="submit"
-          class="btn btn-primary btn-block"
-          style="margin-top: 1rem"
-          :disabled="processing"
-        >
+        <UiButton type="submit" block style="margin-top: 1rem" :disabled="processing">
           {{ processing ? t('checkout.processing') : t('checkout.placeOrder') }}
-        </button>
+        </UiButton>
 
         <p v-if="errorMsg" style="color: #dc2626; margin-top: 0.75rem; font-size: 0.9rem">{{ errorMsg }}</p>
       </form>
 
-      <OrderSummary
-        :items="cartStore.items"
-        :total="cartStore.total"
-        :currency="cartStore.currency"
-      />
+      <OrderSummary :items="cartStore.items" :total="cartStore.total" :currency="cartStore.currency" />
     </div>
   </div>
 </template>
@@ -136,7 +129,9 @@ onMounted(async () => {
       selectedShipping.value = shipping_options[0].id
       await onShippingChange()
     }
-  } catch { /* no shipping options */ }
+  } catch {
+    /* no shipping options */
+  }
 
   if (features.stripe) {
     try {
@@ -145,13 +140,16 @@ onMounted(async () => {
       if (session?.client_secret) {
         clientSecret.value = session.client_secret
       }
-    } catch { /* stripe not available */ }
+    } catch {
+      /* stripe not available */
+    }
   }
 })
 
-async function onShippingChange() {
-  if (!selectedShipping.value) return
-  await cartStore.setShippingMethod(selectedShipping.value)
+async function onShippingChange(val: string) {
+  if (!val) return
+  selectedShipping.value = val
+  await cartStore.setShippingMethod(val)
 }
 
 async function onStripeConfirm(_paymentMethod: any) {
@@ -188,6 +186,24 @@ function formatMoney(amount: number | undefined, currency = 'usd'): string {
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: (currency || 'usd').toUpperCase(),
-  }).format(amount / 100)
+  }).format(amount)
 }
 </script>
+
+<style scoped>
+.checkout-form {
+  max-width: 48ch;
+}
+.checkout-form h2 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+.success-box {
+  border: 1px solid var(--border);
+  padding: 2rem;
+  text-align: center;
+}
+.success-box h2 {
+  margin-bottom: 0.5rem;
+}
+</style>

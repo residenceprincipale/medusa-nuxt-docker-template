@@ -1,2 +1,2 @@
-export { Wishlist } from "./models/wishlist"
-export { WishlistService } from "./service"
+export { Wishlist } from './models/wishlist'
+export { WishlistService } from './service'

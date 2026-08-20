@@ -1,9 +1,9 @@
-import { MedusaService, defineJoinerConfig } from "@medusajs/framework/utils"
-import { Review } from "./models/review"
+import { MedusaService, defineJoinerConfig } from '@medusajs/framework/utils'
+import { Review } from './models/review'
 
 export class ReviewsService extends MedusaService({ Review }) {
   __joinerConfig() {
-    return defineJoinerConfig("reviews", {
+    return defineJoinerConfig('reviews', {
       models: [Review],
     })
   }

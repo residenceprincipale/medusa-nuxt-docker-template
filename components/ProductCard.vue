@@ -1,11 +1,7 @@
 <template>
   <NuxtLink :to="`/products/${product.handle}`" class="product-card">
     <div class="product-card__image">
-      <img
-        :src="product.thumbnail || '/placeholder.png'"
-        :alt="product.title"
-        loading="lazy"
-      />
+      <img :src="product.thumbnail || '/no-image.svg'" :alt="product.title" loading="lazy" />
     </div>
 
     <div class="product-card__info">
@@ -37,3 +33,35 @@ function formatPrice(product: any): string {
   }).format(amount)
 }
 </script>
+
+<style scoped>
+.product-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+.product-card__image {
+  width: 100%;
+  aspect-ratio: 1;
+  background: #f2f2f2;
+  margin-bottom: 0.5rem;
+  overflow: hidden;
+}
+.product-card__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.product-card__info {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.product-card__title {
+  font-weight: 600;
+}
+.product-card__price {
+  color: var(--muted);
+  white-space: nowrap;
+}
+</style>

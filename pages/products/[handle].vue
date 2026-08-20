@@ -6,7 +6,7 @@
     <div v-else class="product-detail">
       <div class="product-gallery">
         <img
-          :src="selectedImage || product.thumbnail || placeholder"
+          :src="selectedImage || product.thumbnail || '/no-image.svg'"
           :alt="product.title"
           class="product-gallery__main"
         />
@@ -26,40 +26,26 @@
       <div>
         <div style="display: flex; align-items: center; gap: 0.5rem">
           <h1 class="title">{{ product.title }}</h1>
-          <WishlistButton
-            v-if="features.wishlist"
-            :product-id="product.id"
-          />
+          <WishlistButton v-if="features.wishlist" :product-id="product.id" />
         </div>
 
         <p v-if="product.description" class="description">{{ product.description }}</p>
         <div class="price">{{ formatPrice(selectedVariant) }}</div>
 
-        <div
-          v-for="option in product.options"
-          :key="option.id"
-          class="option-group"
-        >
+        <div v-for="option in product.options" :key="option.id" class="option-group">
           <label>{{ option.title }}</label>
-          <select
-            :value="selectedOptions[option.id]"
-            @change="onOptionChange(option.id, ($event.target as HTMLSelectElement).value)"
-          >
+          <UiSelect :model-value="selectedOptions[option.id]" @update:modelValue="onOptionChange(option.id, $event)">
             <option v-for="val in option.values" :key="val.id" :value="val.value">
               {{ val.value }}
             </option>
-          </select>
+          </UiSelect>
         </div>
 
-        <button
-          class="btn btn-primary btn-block"
-          :disabled="!selectedVariant || adding"
-          @click="handleAdd"
-        >
+        <UiButton block :disabled="!selectedVariant || adding" @click="handleAdd">
           {{ adding ? t('product.adding') : t('product.addToCart') }}
-        </button>
+        </UiButton>
 
-        <p v-if="added" style="text-align:center; margin-top:0.75rem; color:#166534; font-size:0.9rem">
+        <p v-if="added" style="text-align: center; margin-top: 0.75rem; color: #166534; font-size: 0.9rem">
           {{ t('product.added') }}
         </p>
       </div>
@@ -81,19 +67,18 @@ const features = useFeatures()
 const sdk = useMedusa()
 const { addItem } = useCartStore()
 
-const placeholder = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400"><rect fill="%23eee" width="400" height="400"/><text fill="%23999" x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="sans-serif" font-size="14">No image</text></svg>'
-
-const { data: productData, pending, error } = await useAsyncData(
-  `product-${route.params.handle}`,
-  async () => {
-    const regionId = await useStoreRegionId()
-    const { products } = await sdk.store.product.list({
-      handle: route.params.handle as string,
-      ...(regionId ? { region_id: regionId } : {}),
-    })
-    return { product: products?.[0] ?? null }
-  },
-)
+const {
+  data: productData,
+  pending,
+  error,
+} = await useAsyncData(`product-${route.params.handle}`, async () => {
+  const regionId = await useStoreRegionId()
+  const { products } = await sdk.store.product.list({
+    handle: route.params.handle as string,
+    ...(regionId ? { region_id: regionId } : {}),
+  })
+  return { product: products?.[0] ?? null }
+})
 
 const product = computed(() => productData.value?.product)
 
@@ -130,10 +115,12 @@ watchEffect(() => {
 
 const selectedVariant = computed(() => {
   if (!product.value?.variants?.length) return null
-  return product.value.variants.find((v: any) => {
-    if (!v.options?.length) return true
-    return v.options.every((vo: any) => selectedOptions.value[vo.option_id] === vo.value)
-  }) ?? null
+  return (
+    product.value.variants.find((v: any) => {
+      if (!v.options?.length) return true
+      return v.options.every((vo: any) => selectedOptions.value[vo.option_id] === vo.value)
+    }) ?? null
+  )
 })
 
 function onOptionChange(optionId: string, value: string) {
@@ -160,3 +147,68 @@ function formatPrice(v: any): string {
   return new Intl.NumberFormat('en-US', { style: 'currency', currency }).format(amount)
 }
 </script>
+
+<style scoped>
+.product-detail {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: start;
+  margin-top: 2rem;
+}
+.product-gallery__main {
+  width: 100%;
+  background: #f2f2f2;
+}
+.product-gallery__thumbs {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.75rem;
+}
+.product-gallery__thumb {
+  width: 64px;
+  height: 64px;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+.product-gallery__thumb img {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+}
+.product-gallery__thumb.active img {
+  outline: 1px solid var(--fg);
+}
+.product-detail .title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+.product-detail .description {
+  color: var(--muted);
+  margin-bottom: 1rem;
+  max-width: 50ch;
+}
+.product-detail .price {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+.reviews-section {
+  margin-top: 3rem;
+}
+.reviews-section h2 {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+@media (max-width: 700px) {
+  .product-detail {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+</style>

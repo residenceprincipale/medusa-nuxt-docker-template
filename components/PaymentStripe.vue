@@ -4,9 +4,9 @@
 
     <p v-if="error" class="stripe-element__error">{{ error }}</p>
 
-    <button :disabled="processing || !cardMounted" @click="confirmPayment">
+    <UiButton :disabled="processing || !cardMounted" @click="confirmPayment">
       {{ processing ? t('payment.processing') : t('payment.pay') }}
-    </button>
+    </UiButton>
   </div>
 </template>
 
@@ -82,3 +82,16 @@ onBeforeUnmount(() => {
   cardElement?.destroy()
 })
 </script>
+
+<style scoped>
+.stripe-element {
+  padding: 0.6rem;
+  border: 1px solid var(--border);
+  background: #fff;
+}
+.stripe-element__error {
+  color: #c00;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+}
+</style>

@@ -1,12 +1,9 @@
 export default defineNuxtConfig({
+  compatibilityDate: '2026-08-20',
   devtools: { enabled: false },
   ssr: true,
 
-  modules: [
-    '@pinia/nuxt',
-    '@nuxtjs/i18n',
-    '@vueuse/nuxt',
-  ],
+  modules: ['@pinia/nuxt', '@nuxtjs/i18n', '@vueuse/nuxt'],
 
   i18n: {
     restructuredDir: false,
@@ -26,7 +23,8 @@ export default defineNuxtConfig({
   runtimeConfig: {
     medusaBackend: process.env.NUXT_SERVER_MEDUSA_BACKEND || 'http://backend:9000',
     public: {
-      medusaBackend: process.env.NUXT_PUBLIC_MEDUSA_BACKEND || process.env.MEDUSA_BACKEND_URL || 'http://localhost:9000',
+      medusaBackend:
+        process.env.NUXT_PUBLIC_MEDUSA_BACKEND || process.env.MEDUSA_BACKEND_URL || 'http://localhost:9000',
       medusaPublishableKey: process.env.NUXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY || process.env.MEDUSA_PUBLISHABLE_KEY || '',
     },
   },
@@ -45,9 +43,7 @@ export default defineNuxtConfig({
         { property: 'og:type', content: 'website' },
         { name: 'twitter:card', content: 'summary_large_image' },
       ],
-      link: [
-        { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
-      ],
+      link: [{ rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' }],
     },
   },
 
@@ -60,6 +56,8 @@ export default defineNuxtConfig({
   experimental: {
     payloadExtraction: true,
   },
+
+  ignore: ['**/node_modules/**', '**/.git/**', '**/.output/**', '**/.nuxt/**', '**/.medusa/**'],
 
   routeRules: {
     '/about': { prerender: true },

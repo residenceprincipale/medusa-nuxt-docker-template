@@ -25,21 +25,21 @@ const features = useFeatures()
 const sdk = useMedusa()
 const route = useRoute()
 
+const {
+  data: categoryData,
+  pending,
+  error,
+} = await useAsyncData(`category-${route.params.handle}`, async () => {
+  const { product_categories } = await sdk.store.category.list()
+  return product_categories.find((c: any) => c.handle === route.params.handle) ?? null
+})
+
+const category = computed(() => categoryData.value)
 useHead({ title: () => category.value?.name ?? t('common.loading') })
 useSeoMeta({
   title: () => category.value?.name ?? t('common.loading'),
   description: () => category.value?.description ?? '',
 })
-
-const { data: categoryData, pending, error } = await useAsyncData(
-  `category-${route.params.handle}`,
-  async () => {
-    const { product_categories } = await sdk.store.category.list()
-    return product_categories.find((c: any) => c.handle === route.params.handle) ?? null
-  },
-)
-
-const category = computed(() => categoryData.value)
 
 const { data: productData, pending: productsPending } = await useAsyncData(
   `category-products-${route.params.handle}`,

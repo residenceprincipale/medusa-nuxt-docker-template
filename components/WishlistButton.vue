@@ -1,9 +1,5 @@
 <template>
-  <button
-    class="wishlist-btn"
-    :class="{ 'wishlist-btn--active': isWishlisted }"
-    @click="toggle"
-  >
+  <button class="wishlist-btn" :class="{ 'wishlist-btn--active': isWishlisted }" @click="toggle">
     {{ isWishlisted ? '\u2665' : '\u2661' }}
   </button>
 </template>
@@ -48,3 +44,18 @@ function toggle() {
   emit('toggle', props.productId, isWishlisted.value)
 }
 </script>
+
+<style scoped>
+.wishlist-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.25rem;
+  padding: 0;
+  color: var(--fg);
+  line-height: 1;
+}
+.wishlist-btn--active {
+  color: #c00;
+}
+</style>

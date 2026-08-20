@@ -5,17 +5,17 @@
     <form class="contact-form" @submit.prevent="handleSubmit" style="max-width: 500px">
       <div class="form-group">
         <label>{{ t('contact.name') }}</label>
-        <input v-model="form.name" required />
+        <UiInput v-model="form.name" required />
       </div>
 
       <div class="form-group">
         <label>{{ t('contact.email') }}</label>
-        <input v-model="form.email" type="email" required />
+        <UiInput v-model="form.email" type="email" required />
       </div>
 
       <div class="form-group">
         <label>{{ t('contact.message') }}</label>
-        <textarea v-model="form.message" rows="5" required />
+        <UiInput multiline v-model="form.message" rows="5" required />
       </div>
 
       <p v-if="submitted" style="color: #166534; margin-bottom: 1rem; font-size: 0.9rem">
@@ -26,9 +26,9 @@
         {{ errorMsg }}
       </p>
 
-      <button type="submit" class="btn btn-primary" :disabled="submitting">
+      <UiButton type="submit" :disabled="submitting">
         {{ t('contact.send') }}
-      </button>
+      </UiButton>
     </form>
   </div>
 </template>

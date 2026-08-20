@@ -1,15 +1,10 @@
 <template>
   <form class="newsletter-form" @submit.prevent="onSubmit">
-    <input
-      v-model="email"
-      type="email"
-      :placeholder="t('newsletter.placeholder')"
-      required
-    />
+    <UiInput v-model="email" type="email" :placeholder="t('newsletter.placeholder')" required />
 
-    <button type="submit" :disabled="loading">
+    <UiButton type="submit" :disabled="loading">
       {{ loading ? t('newsletter.loading') : t('newsletter.subscribe') }}
-    </button>
+    </UiButton>
 
     <p v-if="success" class="newsletter-form__success">
       {{ t('newsletter.success') }}
@@ -51,3 +46,16 @@ async function onSubmit() {
   }
 }
 </script>
+
+<style scoped>
+.newsletter-form__success {
+  color: #166534;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+.newsletter-form__error {
+  color: #c00;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+</style>

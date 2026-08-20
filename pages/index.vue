@@ -7,24 +7,26 @@
     </div>
 
     <div v-if="features.categories && categories.length" style="margin-bottom: 1rem">
-      <CategoryFilter
-        :categories="categories"
-        :selected="selectedCategory"
-        @select="onCategorySelect"
-      />
+      <CategoryFilter :categories="categories" :selected="selectedCategory" @select="onCategorySelect" />
     </div>
 
     <div style="margin-bottom: 1rem">
-      <select v-model="sortBy">
+      <UiSelect v-model="sortBy">
         <option value="">{{ t('common.currency') }}</option>
-        <option value="price_asc">Price: Low to High</option>
-        <option value="price_desc">Price: High to Low</option>
-        <option value="created_at">Newest</option>
-        <option value="title_asc">Name: A-Z</option>
-      </select>
+        <option value="-created_at">Newest</option>
+        <option value="created_at">Oldest</option>
+        <option value="title">Name: A-Z</option>
+        <option value="-title">Name: Z-A</option>
+      </UiSelect>
     </div>
 
-    <div v-if="pending" class="loading">{{ t('home.loading') }}</div>
+    <div v-if="pending" class="product-grid">
+      <div v-for="n in 8" :key="n" class="skeleton-card">
+        <div class="skeleton-card__image shimmer" />
+        <div class="skeleton-card__title shimmer" />
+        <div class="skeleton-card__price shimmer" />
+      </div>
+    </div>
     <div v-else-if="error" class="error">{{ t('common.error') }}</div>
     <div v-else-if="products.length === 0" class="cart-empty">{{ t('home.empty') }}</div>
 
@@ -55,19 +57,24 @@ const sortBy = ref('')
 const selectedCategory = ref('')
 const searchQuery = ref('')
 
-const { data, pending, error } = await useAsyncData('products', async () => {
-  const params: Record<string, any> = {}
-  if (searchQuery.value) params.q = searchQuery.value
-  if (sortBy.value) {
-    const [field, order] = sortBy.value.split('_')
-    params.order = `${field}_${order === 'asc' ? 'asc' : 'desc'}`
-  }
-  const regionId = await useStoreRegionId()
-  return sdk.store.product.list({
-    ...params,
-    ...(regionId ? { region_id: regionId } : {}),
-  })
-}, { watch: [searchQuery, sortBy] })
+const { data, pending, error } = await useAsyncData(
+  'products',
+  async () => {
+    const params: Record<string, any> = {}
+    if (searchQuery.value) params.q = searchQuery.value
+    if (selectedCategory.value) {
+      const cat = categories.value.find((c: any) => c.handle === selectedCategory.value)
+      if (cat) params.category_id = [cat.id]
+    }
+    if (sortBy.value) params.order = sortBy.value
+    const regionId = await useStoreRegionId()
+    return sdk.store.product.list({
+      ...params,
+      ...(regionId ? { region_id: regionId } : {}),
+    })
+  },
+  { watch: [searchQuery, sortBy, selectedCategory] },
+)
 
 const products = computed(() => data.value?.products ?? [])
 
@@ -86,3 +93,33 @@ function onCategorySelect(handle: string) {
   selectedCategory.value = handle
 }
 </script>
+
+<style scoped>
+.skeleton-card__image {
+  width: 100%;
+  aspect-ratio: 1;
+  margin-bottom: 0.5rem;
+}
+.skeleton-card__title {
+  width: 70%;
+  height: 1rem;
+  margin-bottom: 0.35rem;
+}
+.skeleton-card__price {
+  width: 40%;
+  height: 0.85rem;
+}
+.shimmer {
+  background: linear-gradient(90deg, #eee 25%, #f5f5f5 37%, #eee 63%);
+  background-size: 400% 100%;
+  animation: shimmer 1.4s ease infinite;
+}
+@keyframes shimmer {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+</style>

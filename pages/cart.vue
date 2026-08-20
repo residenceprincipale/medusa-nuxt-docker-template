@@ -4,16 +4,12 @@
 
     <div v-if="cartStore.isEmpty" class="cart-empty">
       <p>{{ t('cart.empty') }}</p>
-      <NuxtLink to="/" class="btn btn-primary" style="margin-top: 1rem">{{ t('cart.browse') }}</NuxtLink>
+      <UiButton to="/" style="margin-top: 1rem">{{ t('cart.browse') }}</UiButton>
     </div>
 
     <div v-else>
-      <div
-        v-for="item in cartStore.items"
-        :key="item.id"
-        class="cart-item"
-      >
-        <img :src="item.thumbnail || placeholder" :alt="item.title" />
+      <div v-for="item in cartStore.items" :key="item.id" class="cart-item">
+        <img :src="item.thumbnail || '/no-image.svg'" :alt="item.title" />
         <div class="details">
           <div class="name">{{ item.title }}</div>
           <div class="variant">{{ item.variant_title || item.variant?.title }}</div>
@@ -23,18 +19,16 @@
           <span>{{ item.quantity }}</span>
           <button @click="changeQty(item, item.quantity + 1)">+</button>
         </div>
-        <div class="item-price">{{ formatMoney((item.unit_price ?? 0) * (item.quantity ?? 1), cartStore.currency) }}</div>
-        <button class="btn-remove" @click="remove(item.id)">{{ t('cart.remove') }}</button>
+        <div class="item-price">
+          {{ formatMoney((item.unit_price ?? 0) * (item.quantity ?? 1), cartStore.currency) }}
+        </div>
+        <UiButton variant="remove" @click="remove(item.id)">{{ t('cart.remove') }}</UiButton>
       </div>
 
       <div v-if="features.promotions" style="margin: 1.5rem 0">
         <div style="display: flex; gap: 0.5rem; align-items: center">
-          <input
-            v-model="promoCode"
-            type="text"
-            :placeholder="t('cart.promoCode')"
-          />
-          <button class="btn btn-outline" @click="applyPromo">{{ t('cart.apply') }}</button>
+          <UiInput v-model="promoCode" type="text" :placeholder="t('cart.promoCode')" />
+          <UiButton variant="outline" @click="applyPromo">{{ t('cart.apply') }}</UiButton>
         </div>
         <div
           v-for="promo in appliedPromos"
@@ -42,7 +36,7 @@
           style="display: flex; gap: 0.5rem; align-items: center; margin-top: 0.5rem"
         >
           <span>{{ promo }}</span>
-          <button class="btn-remove" @click="removePromo(promo)">{{ t('cart.removePromo') }}</button>
+          <UiButton variant="remove" @click="removePromo(promo)">{{ t('cart.removePromo') }}</UiButton>
         </div>
       </div>
 
@@ -52,8 +46,8 @@
       </div>
 
       <div class="cart-actions">
-        <NuxtLink to="/checkout" class="btn btn-primary">{{ t('cart.checkout') }}</NuxtLink>
-        <NuxtLink to="/" class="btn btn-outline">{{ t('cart.continueShopping') }}</NuxtLink>
+        <UiButton to="/checkout">{{ t('cart.checkout') }}</UiButton>
+        <UiButton to="/" variant="outline">{{ t('cart.continueShopping') }}</UiButton>
       </div>
     </div>
   </div>
@@ -65,8 +59,6 @@ import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 const features = useFeatures()
 const cartStore = useCartStore()
-
-const placeholder = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80"><rect fill="%23eee" width="80" height="80"/></svg>'
 
 useHead({ title: t('cart.title') })
 useSeoMeta({ title: t('cart.title') })
@@ -108,3 +100,52 @@ function formatMoney(amount: number | undefined, currency = 'usd'): string {
   }).format(amount)
 }
 </script>
+
+<style scoped>
+.cart-item {
+  display: flex;
+  gap: 1rem;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid var(--border);
+  align-items: center;
+}
+.cart-item img {
+  width: 72px;
+  height: 72px;
+  object-fit: cover;
+  background: #f2f2f2;
+}
+.cart-item .details {
+  flex: 1;
+}
+.cart-item .name {
+  font-weight: 600;
+}
+.cart-item .variant {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.cart-item .qty-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.cart-item .qty-controls button {
+  width: 26px;
+  height: 26px;
+  border: 1px solid var(--border);
+  background: #fff;
+  cursor: pointer;
+  font-family: inherit;
+}
+.cart-item .item-price {
+  font-weight: 600;
+  min-width: 70px;
+  text-align: right;
+}
+.cart-actions {
+  margin-top: 1.5rem;
+  display: flex;
+  gap: 0.75rem;
+}
+</style>

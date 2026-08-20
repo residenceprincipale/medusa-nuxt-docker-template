@@ -9,7 +9,7 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: ['CMD-SHELL', 'pg_isready -U postgres']
       interval: 2s
       timeout: 5s
       retries: 10
@@ -18,7 +18,7 @@ services:
     image: redis:7-alpine
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
+      test: ['CMD', 'redis-cli', 'ping']
       interval: 2s
       timeout: 5s
       retries: 10
@@ -31,7 +31,7 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
-    ports: ["9000:9000"]
+    ports: ['9000:9000']
     environment:
       NODE_ENV: production
       DATABASE_URL: postgres://postgres:postgres@postgres:5432/medusa
@@ -54,7 +54,7 @@ services:
         NUXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY: ${MEDUSA_PUBLISHABLE_KEY:-}
     restart: unless-stopped
     depends_on: [backend]
-    ports: ["3000:3000"]
+    ports: ['3000:3000']
     environment:
       # Browser-facing URL (client SDK calls run in the user's browser)
       NUXT_PUBLIC_MEDUSA_BACKEND: http://localhost:9000

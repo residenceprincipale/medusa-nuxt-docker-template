@@ -31,8 +31,40 @@ useSeoMeta({
   description: () => post.value?.excerpt ?? '',
 })
 
-const { data: post, pending, error } = await useAsyncData(
-  `blog-${route.params.handle}`,
-  () => $fetch(`/api/blog/${route.params.handle}`),
-)
+const {
+  data: post,
+  pending,
+  error,
+} = await useAsyncData(`blog-${route.params.handle}`, () => $fetch(`/api/blog/${route.params.handle}`))
 </script>
+
+<style scoped>
+.blog-post {
+  max-width: 65ch;
+}
+.blog-post__back {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+.blog-post__title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 1rem 0;
+}
+.blog-post__meta {
+  color: var(--muted);
+  font-size: 0.85rem;
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.blog-post__content {
+  line-height: 1.7;
+}
+.blog-post__content :deep(p) {
+  margin-bottom: 1rem;
+}
+.blog-post__content :deep(img) {
+  margin: 1rem 0;
+}
+</style>

@@ -1,2 +1,2 @@
-export { Review } from "./models/review"
-export { ReviewsService } from "./service"
+export { Review } from './models/review'
+export { ReviewsService } from './service'

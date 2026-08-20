@@ -4,13 +4,15 @@
 
     <div v-if="!authStore.isLoggedIn" class="cart-empty">
       <p>{{ t('auth.loginTitle') }}</p>
-      <NuxtLink to="/auth/login" class="btn btn-primary" style="margin-top: 1rem">{{ t('auth.loginButton') }}</NuxtLink>
+      <UiButton to="/auth/login" style="margin-top: 1rem">{{ t('auth.loginButton') }}</UiButton>
     </div>
 
     <div v-else-if="authStore.customer">
       <div class="account-section">
         <h2>{{ t('account.profile') }}</h2>
-        <p><strong>{{ authStore.customer.first_name }} {{ authStore.customer.last_name }}</strong></p>
+        <p>
+          <strong>{{ authStore.customer.first_name }} {{ authStore.customer.last_name }}</strong>
+        </p>
         <p>{{ authStore.customer.email }}</p>
       </div>
 
@@ -18,12 +20,7 @@
         <h2>{{ t('account.orders') }}</h2>
         <div v-if="!orders.length" class="cart-empty">{{ t('account.noOrders') }}</div>
         <div v-else>
-          <NuxtLink
-            v-for="o in orders"
-            :key="o.id"
-            :to="`/orders/${o.id}`"
-            class="order-item"
-          >
+          <NuxtLink v-for="o in orders" :key="o.id" :to="`/orders/${o.id}`" class="order-item">
             <span>{{ o.id }}</span>
             <span>{{ formatMoney(o.total, o.currency_code) }}</span>
             <span>{{ o.status }}</span>
@@ -64,6 +61,25 @@ function formatMoney(amount: number | undefined, currency = 'usd'): string {
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: (currency || 'usd').toUpperCase(),
-  }).format(amount / 100)
+  }).format(amount)
 }
 </script>
+
+<style scoped>
+.account-section {
+  margin-bottom: 2rem;
+}
+.account-section h2 {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+.order-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--border);
+  text-decoration: none;
+  color: inherit;
+}
+</style>

@@ -1,6 +1,6 @@
-import { Module } from "@medusajs/framework/utils"
-import { ReviewsService } from "./service"
+import { Module } from '@medusajs/framework/utils'
+import { ReviewsService } from './service'
 
-export default Module("reviews", {
+export default Module('reviews', {
   service: ReviewsService,
 })
