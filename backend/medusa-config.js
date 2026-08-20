@@ -50,7 +50,7 @@ module.exports = defineConfig({
   },
   admin: {
     // maxUploadFileSize: 10 * 1024 * 1024, // 10 MB (or Infinity)
-    storefrontUrl: process.env.STOREFRONT_URL || "http://localhost:3000",
+    storefrontUrl: process.env.STOREFRONT_URL || 'http://localhost:3000',
   },
   modules: [
     ...modules,
@@ -60,7 +60,7 @@ module.exports = defineConfig({
       options: {
         providers: [
           {
-            resolve: './src/modules/email',
+            resolve: './src/modules/email/module',
             id: 'smtp',
             options: {
               channels: ['email'],
