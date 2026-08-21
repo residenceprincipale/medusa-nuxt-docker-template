@@ -1,5 +1,5 @@
 <template>
-  <div v-if="features.about">
+  <div>
     <h1 class="page-title">{{ t('about.title') }}</h1>
     <p>{{ t('about.content') }}</p>
   </div>
@@ -9,7 +9,6 @@
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
-const features = useFeatures()
 
 useHead({ title: t('about.title') })
 useSeoMeta({ title: t('about.title'), description: t('about.content') })

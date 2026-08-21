@@ -1,4 +1,4 @@
-import type { Medusa } from '@medusajs/js-sdk'
+import type Medusa from '@medusajs/js-sdk'
 
 type Store = Medusa['store']
 
@@ -11,22 +11,6 @@ export type Customer = Awaited<ReturnType<Store['customer']['retrieve']>>['custo
 export type Address = NonNullable<Customer['addresses']>[number]
 export type Order = Awaited<ReturnType<Store['order']['list']>>['orders'][number]
 export type ShippingOption = Awaited<ReturnType<Store['fulfillment']['listCartOptions']>>['shipping_options'][number]
-export type PaymentSession = NonNullable<Awaited<ReturnType<Store['payment']['initiatePaymentSession']>>['payment_collection']>['payment_sessions'][number]
-
-export interface Review {
-  id: string
-  customer_id: string
-  product_id: string
-  rating: number
-  title: string
-  content: string
-  created_at: string
-  customer?: { first_name?: string | null } | null
-}
-
-export interface BlogPost {
-  handle: string
-  title: string
-  excerpt?: string
-  created_at: string
-}
+export type PaymentSession = NonNullable<
+  Awaited<ReturnType<Store['payment']['initiatePaymentSession']>>['payment_collection']
+>['payment_sessions'][number]

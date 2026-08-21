@@ -6,8 +6,6 @@
     "login": "Connexion",
     "register": "Inscription",
     "logout": "Deconnexion",
-    "wishlist": "Liste de souhaits",
-    "blog": "Blog",
     "about": "A propos",
     "contact": "Contact",
     "search": "Rechercher"
@@ -24,7 +22,6 @@
     "noImage": "Pas d'image",
     "options": "Options",
     "description": "Description",
-    "reviews": "Avis",
     "relatedProducts": "Produits similaires"
   },
   "cart": {
@@ -92,26 +89,6 @@
     "all": "Toutes les categories",
     "empty": "Aucune categorie."
   },
-  "wishlist": {
-    "title": "Liste de souhaits",
-    "empty": "Votre liste de souhaits est vide.",
-    "added": "Ajoute a la liste",
-    "removed": "Retire de la liste"
-  },
-  "reviews": {
-    "title": "Avis",
-    "write": "Ecrire un avis",
-    "empty": "Pas encore d'avis. Soyez le premier !",
-    "rating": "Note",
-    "submit": "Envoyer",
-    "cancel": "Annuler"
-  },
-  "blog": {
-    "title": "Blog",
-    "empty": "Aucun article.",
-    "readMore": "Lire la suite",
-    "backToBlog": "Retour au blog"
-  },
   "about": {
     "title": "A propos",
     "content": "Nous sommes une boutique e-commerce moderne construite avec MedusaJS."
@@ -125,13 +102,6 @@
     "success": "Message envoye !",
     "error": "Echec de l'envoi."
   },
-  "newsletter": {
-    "title": "Newsletter",
-    "placeholder": "Votre email",
-    "subscribe": "S'abonner",
-    "subscribed": "Abonne !",
-    "error": "Echec de l'abonnement."
-  },
   "orderTracking": {
     "title": "Suivi de commande",
     "orderId": "Numero de commande",
@@ -142,9 +112,7 @@
     "total": "Total"
   },
   "footer": {
-    "newsletter": "Newsletter",
     "categories": "Categories",
-    "blog": "Blog",
     "about": "A propos",
     "contact": "Contact",
     "copyright": "© {year} Medusa Store"

@@ -14,6 +14,18 @@ export function useMedusa() {
   return sdk
 }
 
+export function medusaFetch<T>(url: string, opts: Record<string, unknown> = {}) {
+  const config = useRuntimeConfig()
+  return $fetch<T>(url, {
+    ...opts,
+    baseURL: (import.meta.server ? config.medusaBackend : config.public.medusaBackend) as string,
+    headers: {
+      'x-publishable-api-key': config.public.medusaPublishableKey as string,
+      ...(opts.headers as Record<string, string>),
+    },
+  })
+}
+
 let regionId: string | null = null
 let regionIdPromise: Promise<string | null> | null = null
 

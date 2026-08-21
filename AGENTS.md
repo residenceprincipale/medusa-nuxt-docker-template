@@ -9,15 +9,7 @@ Medusa v2 + Nuxt 4 storefront monorepo, run via `docker compose`. Backend: Medus
 - Backend seed: `docker compose exec backend bun run db:seed` (runs `medusa exec src/seed.ts`)
 - **Storefront changes** take effect only after rebuild: `docker compose build storefront && docker compose up -d storefront`
 - **Backend `src/` changes** likewise need `docker compose build backend && docker compose up -d backend`, OR (quick test) `docker cp` the edited file into the running container then `exec`.
-
-## Critical gotchas (read before editing)
-
-- **Prices are MAJOR units here — do NOT divide by 100.** Medusa returns amounts already in dollars; `components/ProductCard.vue`, `pages/products/[handle].vue`, and `pages/cart.vue` display them raw. A `/100` makes everything 100x wrong (was `$2500.00`).
-- **Storefront is a built image with no source mount.** Editing `*.vue`/`composables`/`stores` on the host does nothing until `docker compose build storefront`. `NUXT_PUBLIC_*` vars are baked into `.output` at build time (see `Dockerfile` `bun run build`), so public URL/key changes need a rebuild too. Server-only `NUXT_SERVER_MEDUSA_BACKEND` is overridden at runtime via compose `environment` and **does not** need a rebuild.
-- **Cart line price:** the cart API returns `item.unit_total` as `null`. Use `item.unit_price` (per unit); line total = `(item.unit_price ?? 0) * (item.quantity ?? 1)` in `pages/cart.vue`.
-- **Don't add `swr`/`routeRules` caching for `/products/**`.** It was removed from `nuxt.config.ts`: a 10-min SWR served stale product pages and fed deleted variant IDs to add-to-cart.
-- **Server vs browser backend URL:** `composables/useMedusa.ts` splits them — server uses `runtimeConfig.medusaBackend` (`http://backend:9000`, docker-internal), browser uses `runtimeConfig.public.medusaBackend` (`http://localhost:9000`). Both must be set or SSR fetch / client call breaks.
-- **Stale carts:** the pinia cart store persists `cart_id` in localStorage. A cart holding deleted products shows an empty/`$0.00` cart — clear localStorage when testing reseeds/products.
+- Dev mode (hot reload) for storefront: `bun run dev`. Dev mode for backend: `docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d backend `.
 
 ## Seeding products (`backend/src/seed.ts`)
 
@@ -34,7 +26,6 @@ Medusa v2 + Nuxt 4 storefront monorepo, run via `docker compose`. Backend: Medus
 - `composables/useMedusa.ts` — API client + server/public URL split.
 - `stores/cart.ts` — pinia cart (localStorage `cart_id`).
 - `backend/src/` — Medusa modules + `seed.ts`.
-- `config/` — storefront config (features toggles: i18n/stripe/wishlist/reviews/blog/orderTracking off by default).
 - `docker-compose.yml` — services + env wiring. `Dockerfile` (storefront) and `backend/Dockerfile`.
 
 ## Verify with Chrome DevTools

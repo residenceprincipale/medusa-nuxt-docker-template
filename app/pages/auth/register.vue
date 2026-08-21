@@ -1,5 +1,5 @@
 <template>
-  <div v-if="features.auth">
+  <div>
     <h1 class="page-title">{{ t('auth.registerTitle') }}</h1>
 
     <form class="auth-form" @submit.prevent="handleRegister">
@@ -44,7 +44,6 @@
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
-const features = useFeatures()
 const authStore = useAuthStore()
 const router = useRouter()
 

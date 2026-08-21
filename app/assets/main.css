@@ -143,20 +143,6 @@ button {
   text-wrap: pretty;
 }
 
-.newsletter-form {
-  display: flex;
-  gap: 0.5rem;
-  margin-top: 0.5rem;
-  max-width: 40ch;
-}
-.newsletter-form input {
-  flex: 1;
-  padding: 0.45rem;
-  border: 1px solid var(--border);
-  font-size: 0.9rem;
-  font-family: inherit;
-}
-
 @media (max-width: 700px) {
   .form-row {
     grid-template-columns: 1fr;

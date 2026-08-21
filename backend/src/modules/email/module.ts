@@ -1,5 +1,5 @@
-import SmtpNotificationProviderService from "./service"
+import SmtpNotificationProviderService from './service'
 
 export default {
-  service: SmtpNotificationProviderService,
+  services: [SmtpNotificationProviderService],
 }

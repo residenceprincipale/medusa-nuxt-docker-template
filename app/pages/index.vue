@@ -2,11 +2,11 @@
   <div>
     <h1 class="page-title">{{ t('home.title') }}</h1>
 
-    <div v-if="features.search" class="toolbar-item">
+    <div class="toolbar-item">
       <SearchBar @search="onSearch" />
     </div>
 
-    <div v-if="features.categories && categories.length" class="toolbar-item">
+    <div v-if="categories.length" class="toolbar-item">
       <CategoryFilter :categories="categories" :selected="selectedCategory" @select="onCategorySelect" />
     </div>
 
@@ -41,7 +41,6 @@ import { useI18n } from 'vue-i18n'
 import type { HttpTypes } from '@medusajs/types'
 
 const { t } = useI18n()
-const features = useFeatures()
 const sdk = useMedusa()
 
 useHead({
@@ -79,10 +78,7 @@ const { data, pending, error } = await useAsyncData(
 
 const products = computed(() => data.value?.products ?? [])
 
-const { data: categoryData } = await useAsyncData('categories', async () => {
-  if (!features.categories) return { product_categories: [] }
-  return sdk.store.category.list()
-})
+const { data: categoryData } = await useAsyncData('categories', () => sdk.store.category.list())
 
 const categories = computed(() => categoryData.value?.product_categories ?? [])
 

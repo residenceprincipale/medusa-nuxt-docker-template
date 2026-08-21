@@ -1,5 +1,5 @@
 <template>
-  <div v-if="features.auth">
+  <div>
     <h1 class="page-title">{{ t('auth.requestResetTitle') }}</h1>
 
     <p class="hint">{{ t('auth.requestResetHint') }}</p>
@@ -29,7 +29,6 @@
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
-const features = useFeatures()
 const sdk = useMedusa()
 
 useHead({ title: t('auth.requestResetTitle') })

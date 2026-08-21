@@ -75,14 +75,5 @@ module.exports = defineConfig({
         ],
       },
     },
-    {
-      resolve: './src/modules/wishlist/module',
-    },
-    {
-      resolve: './src/modules/reviews/module',
-    },
-    {
-      resolve: './src/modules/blog/module',
-    },
   ],
 })

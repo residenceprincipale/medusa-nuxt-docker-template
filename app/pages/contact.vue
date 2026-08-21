@@ -1,5 +1,5 @@
 <template>
-  <div v-if="features.contact">
+  <div>
     <h1 class="page-title">{{ t('contact.title') }}</h1>
 
     <form class="contact-form" @submit.prevent="handleSubmit">
@@ -37,7 +37,6 @@
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
-const features = useFeatures()
 
 useHead({ title: t('contact.title') })
 useSeoMeta({ title: t('contact.title') })
@@ -53,7 +52,7 @@ async function handleSubmit() {
   submitted.value = false
 
   try {
-    await $fetch('/api/contact', {
+    await medusaFetch('/store/contact', {
       method: 'POST',
       body: { ...form },
     })

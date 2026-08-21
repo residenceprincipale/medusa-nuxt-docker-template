@@ -2,19 +2,23 @@ import type { MedusaRequest, MedusaResponse } from "@medusajs/framework"
 import { Modules } from "@medusajs/framework/utils"
 
 export async function POST(req: MedusaRequest, res: MedusaResponse) {
-  const { email } = (req.body || {}) as { email?: string }
-  if (!email) {
-    return res.status(400).json({ message: "Email is required" })
+  const { name, email, message } = (req.body || {}) as {
+    name?: string
+    email?: string
+    message?: string
+  }
+  if (!email || !message) {
+    return res.status(400).json({ message: "Email and message are required" })
   }
 
   const notification = req.scope.resolve(Modules.NOTIFICATION)
   await notification.createNotifications({
     to: email,
     channel: "email",
-    template: "newsletter-welcome",
+    template: "contact-form",
     data: {
-      subject: "You're subscribed!",
-      html: `<h1>Thanks for subscribing!</h1><p>You're now on our newsletter list (${email}).</p>`,
+      subject: "Contact form submission",
+      html: `<p>From: ${name || "anonymous"} (${email})</p><p>${message}</p>`,
     },
   })
 

@@ -10,28 +10,23 @@ A modern, production-ready e-commerce storefront built with **Medusa v2** (headl
 
 - **Headless & composable** — Medusa v2 handles catalog, cart, orders, and auth; the Nuxt storefront is fully customizable and ships with SSR.
 - **Zero local toolchain** — Bun, Node, and all build steps live inside Docker. You only need Docker installed.
-- **Feature toggles** — turn store sections (blog, reviews, wishlist, Stripe, i18n, etc.) on/off from a single config file without deleting code.
-- **Batteries included** — seedable demo catalog, admin dashboard, multi-region pricing, and a ready-to-extend module layout (`wishlist`, `reviews`, `blog`).
+- **Batteries included** — seedable demo catalog, admin dashboard, multi-region pricing, and a ready-to-extend module layout.
 - **Docker-native networking** — server-side fetches use the internal `backend:9000` hostname while the browser uses `localhost:9000`, so it "just works" behind one Compose file.
 
 ---
 
 ## Features
 
-| Area            | Status | Notes                                              |
-| --------------- | ------ | -------------------------------------------------- |
-| Auth / account  | ✅     | Customer registration, login, order history        |
-| Product search  | ✅     | Live search page                                   |
-| Categories      | ✅     | Category browsing                                  |
-| Promotions      | ✅     | Medusa promotions engine                           |
-| Newsletter      | ✅     | Signup flow                                        |
-| About / Contact | ✅     | Static content pages                               |
-| i18n            | ⚙️     | Scaffolded (en/fr), toggle in `config/features.ts` |
-| Stripe          | ⚙️     | Auto-enabled when `STRIPE_API_KEY` is set          |
-| Wishlist        | ⚙️     | Custom module, toggle in `config/features.ts`      |
-| Reviews         | ⚙️     | Custom module, toggle in `config/features.ts`      |
-| Blog            | ⚙️     | Custom module, toggle in `config/features.ts`      |
-| Order tracking  | ⚙️     | Toggle in `config/features.ts`                     |
+| Area            | Status | Notes                                       |
+| --------------- | ------ | ------------------------------------------- |
+| Auth / account  | ✅     | Customer registration, login, order history |
+| Product search  | ✅     | Live search page                            |
+| Categories      | ✅     | Category browsing                           |
+| Promotions      | ✅     | Medusa promotions engine                    |
+| About / Contact | ✅     | Static content pages                        |
+| i18n            | ✅     | en/fr                                       |
+| Stripe          | ⚙️     | Auto-enabled when Stripe keys are set       |
+| Order tracking  | ✅     | Order history + order detail pages          |
 
 ---
 
@@ -177,8 +172,6 @@ docker compose down
 ├── docker-compose.yml      # postgres + redis + backend + storefront
 ├── Dockerfile              # Nuxt storefront image
 ├── nuxt.config.ts          # storefront config (i18n, runtime config, route rules)
-├── config/
-│   └── features.ts         # feature flags for store sections
 ├── pages/                  # Nuxt routes (home, products, cart, checkout, …)
 ├── components/             # UI components (e.g. ProductCard)
 ├── composables/            # useMedusa() API client
@@ -188,7 +181,7 @@ docker compose down
     ├── medusa-config.js    # backend modules & CORS
     └── src/
         ├── seed.ts         # demo catalog seed
-        ├── modules/        # custom: wishlist, reviews, blog
+        ├── modules/        # custom: email notification provider
         └── api/            # custom store API routes
 ```
 
@@ -196,24 +189,9 @@ docker compose down
 
 ## Configuration
 
-### Feature flags
+### Stripe
 
-Store sections are toggled in [`config/features.ts`](config/features.ts):
-
-```ts
-export const features = {
-  blog: false,
-  reviews: false,
-  wishlist: false,
-  i18n: false,
-  stripe: false,
-  // …
-} as const
-```
-
-### Backend modules
-
-Custom modules and Stripe are wired in [`backend/medusa-config.js`](backend/medusa-config.js). Stripe is auto-registered when `STRIPE_API_KEY` is present.
+Storefront checkout uses Stripe when `NUXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` is set (passed through `docker-compose.yml`). The backend registers the Stripe payment provider when `STRIPE_API_KEY` is present — see [`backend/medusa-config.js`](backend/medusa-config.js).
 
 #### File storage (S3, optional)
 
@@ -252,7 +230,7 @@ When `S3_BUCKET` is set, Medusa swaps in `@medusajs/file-s3` and serves image UR
 Contributions are welcome! Please:
 
 1. Fork the repository and create a feature branch.
-2. Follow the existing code style and keep feature flags in `config/features.ts`.
+2. Follow the existing code style.
 3. For behavioral changes to the backend, add/adjust modules under `backend/src/modules`.
 4. Submit a pull request describing your change.
 

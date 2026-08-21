@@ -1,5 +1,5 @@
 <template>
-  <div v-if="features.auth">
+  <div>
     <h1 class="page-title">{{ t('account.title') }}</h1>
 
     <div v-if="!authStore.isLoggedIn" class="cart-empty">
@@ -50,7 +50,7 @@
         </div>
       </div>
 
-      <div v-if="features.orderTracking" class="account-section">
+      <div class="account-section">
         <h2>{{ t('account.orders') }}</h2>
         <div v-if="ordersLoading" class="cart-empty">{{ t('common.loading') }}</div>
         <div v-else-if="!orders.length" class="cart-empty">{{ t('account.noOrders') }}</div>
@@ -71,7 +71,6 @@ import { useI18n } from 'vue-i18n'
 import type { Order } from '~/types/medusa'
 
 const { t } = useI18n()
-const features = useFeatures()
 const authStore = useAuthStore()
 const sdk = useMedusa()
 
@@ -104,7 +103,7 @@ onMounted(async () => {
   }
   await authStore.fetchCustomer()
 
-  if (features.orderTracking && authStore.token) {
+  if (authStore.token) {
     ordersLoading.value = true
     try {
       const { orders: list } = await sdk.store.order.list(

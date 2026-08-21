@@ -25,7 +25,7 @@
         <UiButton variant="remove" @click="remove(item.id)">{{ t('cart.remove') }}</UiButton>
       </div>
 
-      <div v-if="features.promotions" class="promo-block">
+      <div class="promo-block">
         <div class="promo-row">
           <UiInput v-model="promoCode" type="text" :placeholder="t('cart.promoCode')" />
           <UiButton variant="outline" @click="applyPromo">{{ t('cart.apply') }}</UiButton>
@@ -54,7 +54,6 @@ import { useI18n } from 'vue-i18n'
 import type { CartLineItem } from '~/types/medusa'
 
 const { t } = useI18n()
-const features = useFeatures()
 const cartStore = useCartStore()
 
 useHead({ title: t('cart.title') })

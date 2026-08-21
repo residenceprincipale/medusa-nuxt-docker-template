@@ -6,7 +6,6 @@ export default defineNuxtConfig({
   modules: ['@pinia/nuxt', '@nuxtjs/i18n', '@vueuse/nuxt'],
 
   i18n: {
-    restructuredDir: false,
     locales: [
       { code: 'en', name: 'English', file: 'en.json' },
       { code: 'fr', name: 'Francais', file: 'fr.json' },
@@ -28,6 +27,8 @@ export default defineNuxtConfig({
       // Admin panel URL. Local default: backend admin at :9000/app.
       // Override per environment (e.g. NUXT_PUBLIC_MEDUSA_ADMIN_URL=https://admin.example.com).
       adminUrl: process.env.NUXT_PUBLIC_MEDUSA_ADMIN_URL || 'http://localhost:9000/app',
+      // Stripe checkout is enabled only when a publishable key is provided.
+      stripePublishableKey: process.env.NUXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || '',
     },
   },
 
@@ -63,7 +64,6 @@ export default defineNuxtConfig({
 
   routeRules: {
     '/about': { prerender: true },
-    '/blog/**': { swr: 3600 },
     '/cart': { ssr: false },
     '/checkout': { ssr: false },
   },

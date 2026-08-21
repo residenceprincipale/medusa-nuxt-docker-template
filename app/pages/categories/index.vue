@@ -1,5 +1,5 @@
 <template>
-  <div v-if="features.categories">
+  <div>
     <div v-if="pending" class="loading">{{ t('common.loading') }}</div>
     <div v-else-if="error" class="error">{{ t('common.error') }}</div>
     <div v-else-if="!categories.length" class="cart-empty">{{ t('home.empty') }}</div>
@@ -16,7 +16,6 @@
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
-const features = useFeatures()
 const sdk = useMedusa()
 
 useHead({ title: t('footer.categories') })

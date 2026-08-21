@@ -66,7 +66,7 @@
         </div>
 
         <PaymentStripe
-          v-if="features.stripe && clientSecret"
+          v-if="stripeEnabled && clientSecret"
           :client-secret="clientSecret"
           @confirm="onStripeConfirm"
         />
@@ -94,10 +94,12 @@ import type { ShippingOption, Order } from '~/types/medusa'
 import type { Stripe } from '@stripe/stripe-js'
 
 const { t } = useI18n()
-const features = useFeatures()
 const sdk = useMedusa()
 const cartStore = useCartStore()
 const authStore = useAuthStore()
+
+// Stripe only when the publishable key is provided.
+const stripeEnabled = !!useRuntimeConfig().public.stripePublishableKey
 
 useHead({ title: t('checkout.title') })
 useSeoMeta({ title: t('checkout.title') })
@@ -165,7 +167,7 @@ onMounted(async () => {
     /* no shipping options */
   }
 
-  if (features.stripe) {
+  if (stripeEnabled) {
     try {
       const pc = await cartStore.createPaymentSession('pp_stripe_stripe')
       const session = pc?.payment_sessions?.find((s) => s.status === 'pending')
@@ -195,7 +197,7 @@ async function placeOrder() {
   try {
     await cartStore.updateShippingAddress(addressPayload())
 
-    if (!features.stripe) {
+    if (!stripeEnabled) {
       await cartStore.createPaymentSession('pp_system_default')
     }
 

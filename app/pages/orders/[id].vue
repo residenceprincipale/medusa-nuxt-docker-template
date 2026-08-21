@@ -1,5 +1,5 @@
 <template>
-  <div v-if="features.orderTracking">
+  <div>
     <h1 class="page-title">{{ t('orderTracking.title') }}</h1>
 
     <div v-if="pending" class="loading">{{ t('common.loading') }}</div>
@@ -39,7 +39,6 @@
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
-const features = useFeatures()
 const sdk = useMedusa()
 const route = useRoute()
 

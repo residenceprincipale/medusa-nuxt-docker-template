@@ -2,14 +2,9 @@
   <footer class="site-footer">
     <div class="footer-content">
       <div class="footer-links">
-        <NuxtLink v-if="features.categories" to="/categories">{{ t('footer.categories') }}</NuxtLink>
-        <NuxtLink v-if="features.blog" to="/blog">{{ t('footer.blog') }}</NuxtLink>
-        <NuxtLink v-if="features.about" to="/about">{{ t('footer.about') }}</NuxtLink>
-        <NuxtLink v-if="features.contact" to="/contact">{{ t('footer.contact') }}</NuxtLink>
-      </div>
-
-      <div v-if="features.newsletter" class="newsletter-form">
-        <NewsletterForm @subscribe="handleSubscribe" />
+        <NuxtLink to="/categories">{{ t('footer.categories') }}</NuxtLink>
+        <NuxtLink to="/about">{{ t('footer.about') }}</NuxtLink>
+        <NuxtLink to="/contact">{{ t('footer.contact') }}</NuxtLink>
       </div>
 
       <div class="footer-copyright">
@@ -23,19 +18,6 @@
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
-const features = useFeatures()
-const sdk = useMedusa()
-
-async function handleSubscribe(email: string) {
-  try {
-    await sdk.client.fetch('/store/newsletter', {
-      method: 'POST',
-      body: { email },
-    })
-  } catch (e) {
-    console.error('Newsletter subscription failed:', e instanceof Error ? e.message : String(e))
-  }
-}
 </script>
 
 <style scoped>

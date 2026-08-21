@@ -26,7 +26,6 @@
       <div>
         <div class="product-title-row">
           <h1 class="title">{{ product.title }}</h1>
-          <WishlistButton v-if="features.wishlist" :product-id="product.id" />
         </div>
 
         <p v-if="product.description" class="description">{{ product.description }}</p>
@@ -50,23 +49,15 @@
         </p>
       </div>
     </div>
-
-    <div v-if="features.reviews && product" class="reviews-section">
-      <h2>{{ t('product.reviews') }}</h2>
-      <ReviewList :reviews="product.reviews || []" />
-    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
-import type { Product, ProductVariant, Review } from '~/types/medusa'
-
-type ProductWithReviews = Product & { reviews?: Review[] }
+import type { Product, ProductVariant } from '~/types/medusa'
 
 const { t } = useI18n()
 const route = useRoute()
-const features = useFeatures()
 const sdk = useMedusa()
 const { addItem } = useCartStore()
 
@@ -83,7 +74,7 @@ const {
   return { product: products?.[0] ?? null }
 })
 
-const product = computed(() => productData.value?.product as ProductWithReviews | undefined)
+const product = computed(() => productData.value?.product as Product | undefined)
 
 useHead({
   title: () => product.value?.title ?? t('common.loading'),
@@ -200,24 +191,12 @@ function formatPrice(v: ProductVariant | null): string {
   font-weight: 600;
   margin-bottom: 1.5rem;
 }
-.reviews-section {
-  margin-top: 3rem;
-}
-.reviews-section h2 {
-  font-size: 1.25rem;
-  margin-bottom: 0.5rem;
-}
 
 @media (max-width: 700px) {
   .product-detail {
     grid-template-columns: 1fr;
     gap: 1.5rem;
   }
-}
-.product-title-row {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
 }
 .add-success {
   text-align: center;

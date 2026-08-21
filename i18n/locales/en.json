@@ -6,8 +6,6 @@
     "login": "Login",
     "register": "Register",
     "logout": "Logout",
-    "wishlist": "Wishlist",
-    "blog": "Blog",
     "about": "About",
     "contact": "Contact",
     "search": "Search"
@@ -24,7 +22,6 @@
     "noImage": "No image",
     "options": "Options",
     "description": "Description",
-    "reviews": "Reviews",
     "relatedProducts": "Related products"
   },
   "cart": {
@@ -112,26 +109,6 @@
     "all": "All categories",
     "empty": "No categories found."
   },
-  "wishlist": {
-    "title": "Wishlist",
-    "empty": "Your wishlist is empty.",
-    "added": "Added to wishlist",
-    "removed": "Removed from wishlist"
-  },
-  "reviews": {
-    "title": "Reviews",
-    "write": "Write a review",
-    "empty": "No reviews yet. Be the first!",
-    "rating": "Rating",
-    "submit": "Submit",
-    "cancel": "Cancel"
-  },
-  "blog": {
-    "title": "Blog",
-    "empty": "No posts yet.",
-    "readMore": "Read more",
-    "backToBlog": "Back to blog"
-  },
   "about": {
     "title": "About Us",
     "content": "We are a modern e-commerce store built with MedusaJS."
@@ -145,13 +122,6 @@
     "success": "Message sent!",
     "error": "Failed to send message."
   },
-  "newsletter": {
-    "title": "Newsletter",
-    "placeholder": "Enter your email",
-    "subscribe": "Subscribe",
-    "subscribed": "Subscribed!",
-    "error": "Subscription failed."
-  },
   "orderTracking": {
     "title": "Order Tracking",
     "orderId": "Order ID",
@@ -162,9 +132,7 @@
     "total": "Total"
   },
   "footer": {
-    "newsletter": "Newsletter",
     "categories": "Categories",
-    "blog": "Blog",
     "about": "About",
     "contact": "Contact",
     "copyright": "© {year} Medusa Store"

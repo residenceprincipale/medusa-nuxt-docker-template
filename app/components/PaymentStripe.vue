@@ -1,5 +1,5 @@
 <template>
-  <div v-if="features.stripe" class="stripe-element">
+  <div class="stripe-element">
     <div ref="cardContainer" />
 
     <p v-if="error" class="stripe-element__error">{{ error }}</p>
@@ -15,7 +15,6 @@ import { useI18n } from 'vue-i18n'
 import { loadStripe, type Stripe, type StripeCardElement } from '@stripe/stripe-js'
 
 const { t } = useI18n()
-const features = useFeatures()
 
 const props = defineProps<{
   clientSecret: string
@@ -34,8 +33,6 @@ let stripe: Stripe | null = null
 let cardElement: StripeCardElement | null = null
 
 onMounted(async () => {
-  if (!features.stripe) return
-
   try {
     const pk = useRuntimeConfig().public.stripePublishableKey as string
     stripe = await loadStripe(pk)

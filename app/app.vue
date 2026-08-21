@@ -11,12 +11,9 @@
 </template>
 
 <script setup lang="ts">
-const features = useFeatures()
 const authStore = useAuthStore()
 
-if (features.auth) {
-  authStore.init()
-}
+authStore.init()
 
 useHead({
   titleTemplate: (title) => (title ? `${title} | Medusa Store` : 'Medusa Store'),

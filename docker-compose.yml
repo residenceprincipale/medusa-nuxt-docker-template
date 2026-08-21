@@ -61,6 +61,7 @@ services:
         NUXT_PUBLIC_MEDUSA_BACKEND: http://localhost:9000
         NUXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY: ${NUXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY:-}
         NUXT_PUBLIC_MEDUSA_ADMIN_URL: ${NUXT_PUBLIC_MEDUSA_ADMIN_URL:-http://localhost:9000/app}
+        NUXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: ${NUXT_PUBLIC_STRIPE_PUBLISHABLE_KEY:-}
     restart: unless-stopped
     depends_on: [backend]
     expose:
@@ -71,6 +72,7 @@ services:
       # SSR-only URL (server runs inside the docker network)
       NUXT_SERVER_MEDUSA_BACKEND: http://backend:9000
       NUXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY: ${NUXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY:-}
+      NUXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: ${NUXT_PUBLIC_STRIPE_PUBLISHABLE_KEY:-}
 
 volumes:
   pgdata:

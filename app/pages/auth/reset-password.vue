@@ -1,5 +1,5 @@
 <template>
-  <div v-if="features.auth">
+  <div>
     <h1 class="page-title">{{ t('auth.resetTitle') }}</h1>
 
     <p v-if="!token" class="auth-error">{{ t('auth.resetError') }}</p>
@@ -28,7 +28,6 @@
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
-const features = useFeatures()
 const sdk = useMedusa()
 const route = useRoute()
 const router = useRouter()

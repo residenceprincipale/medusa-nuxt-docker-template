@@ -1,7 +1,6 @@
 import { Modules } from '@medusajs/framework/utils'
 import { createProductsWorkflow } from '@medusajs/medusa/core-flows'
 import { MedusaContainer, Logger } from '@medusajs/framework/types'
-import { BlogService } from './modules/blog'
 
 export default async function seedDb({ container }: { container: MedusaContainer }) {
   const logger = container.resolve<Logger>('logger')
@@ -12,8 +11,10 @@ export default async function seedDb({ container }: { container: MedusaContainer
   if (stores.length === 0) {
     await storeModule.createStores({
       name: 'Medusa Store',
-      supported_currencies: [{ currency_code: 'usd' }, { currency_code: 'eur' }],
-      default_currency_code: 'usd',
+      supported_currencies: [
+        { currency_code: 'usd', is_default: true },
+        { currency_code: 'eur' },
+      ],
     })
     logger.info('Created default store')
   }
@@ -26,14 +27,12 @@ export default async function seedDb({ container }: { container: MedusaContainer
       countries: ['us'],
       currency_code: 'usd',
       payment_providers: ['pp_system_default'],
-      fulfillment_providers: ['fp_manual'],
     })
     await regionModule.createRegions({
       name: 'Europe',
       countries: ['fr', 'de', 'es', 'it', 'nl', 'be'],
       currency_code: 'eur',
       payment_providers: ['pp_system_default'],
-      fulfillment_providers: ['fp_manual'],
     })
     logger.info('Created regions')
   }
@@ -133,34 +132,6 @@ export default async function seedDb({ container }: { container: MedusaContainer
     })
   }
   logger.info(`Created ${sampleProducts.length} sample product(s)`)
-
-  try {
-    const blogService = container.resolve<BlogService>('blogService')
-    const existing = await blogService.listPosts()
-    if (!existing?.length) {
-      await blogService.createPosts([
-        {
-          title: 'Welcome to Our Store',
-          handle: 'welcome-to-our-store',
-          content: 'We are excited to launch our new e-commerce store powered by MedusaJS.',
-          excerpt: 'Discover our new online store.',
-          author: 'Admin',
-          published_at: new Date(),
-        },
-        {
-          title: 'Behind the Scenes: Our Shipping Process',
-          handle: 'shipping-process',
-          content: 'Learn how we ensure your orders are packed with care and shipped quickly.',
-          excerpt: 'How we ship your orders.',
-          author: 'Admin',
-          published_at: new Date(),
-        },
-      ])
-      logger.info('Created blog posts')
-    }
-  } catch {
-    // Blog module not available
-  }
 
   logger.info('Seed complete!')
 }
